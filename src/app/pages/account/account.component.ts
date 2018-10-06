@@ -25,15 +25,15 @@ export class AccountPageComponent implements OnInit, OnDestroy{
   displayedColumns = ['actions'];
   code;
   tables = [];
-  eosRate;
+  rsnRate;
   subscription;
   displayedColumnsPermissiopn = ['Permission', 'Address', 'Threshold', 'Weight'];
   dataSourcePermission;
   controlledAccount;
   tokensArray;
 
-  constructor(private route: ActivatedRoute, 
-              protected http: HttpClient, 
+  constructor(private route: ActivatedRoute,
+              protected http: HttpClient,
               private MainService: MainService,
               public dialog: MatDialog){}
 
@@ -59,15 +59,15 @@ export class AccountPageComponent implements OnInit, OnDestroy{
   };
 
   getBalance(accountId){
-      this.http.get(`/api/v1/get_currency_balance/eosio.token/${accountId}/EOS`)
+      this.http.get(`/api/v1/get_currency_balance/arisen.token/${accountId}/RSN`)
            .subscribe((res: any) => {
-                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]); 
+                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]);
                           let staked = 0;
                           if (this.mainData.voter_info && this.mainData.voter_info.staked){
                               staked = this.mainData.voter_info.staked;
                           }
                           this.balance = this.unstaked + staked / 10000;
-                          this.eosRate = this.MainService.getEosPrice();
+                          this.rsnRate = this.MainService.getRsnPrice();
                       },
                       (error) => {
                           console.error(error);
@@ -165,8 +165,8 @@ export class AccountPageComponent implements OnInit, OnDestroy{
       };
       data.forEach(elem => {
           if (elem.controlled_permission === "active"){
-             result.controlled_accounts.push(elem.controlled_account); 
-          }  
+             result.controlled_accounts.push(elem.controlled_account);
+          }
       });
       return result;
   }
@@ -178,7 +178,7 @@ export class AccountPageComponent implements OnInit, OnDestroy{
                           },
                           (error) => {
                               console.error(error);
-                          });      
+                          });
   }
 
   openDialogMemo(event, data){
@@ -204,13 +204,13 @@ export class AccountPageComponent implements OnInit, OnDestroy{
        this.getControlledAccounts(this.accountId);
        this.getAllTokens(this.accountId);
     });
-    //this.subscription = this.MainService.getEosPrice().subscribe(item => { this.eosRate = item; console.log(item); });
+    //this.subscription = this.MainService.getRsnPrice().subscribe(item => { this.rsnRate = item; console.log(item); });
   }
 
   ngOnDestroy() {
-    this.block.unsubscribe(); 
+    this.block.unsubscribe();
     //this.subscription.unsubscribe();
-  }	
+  }
 }
 
 
@@ -227,17 +227,3 @@ export class AccountPageComponent implements OnInit, OnDestroy{
 export class DialogDataMemo {
   constructor(@Inject(MAT_DIALOG_DATA) public data) {}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

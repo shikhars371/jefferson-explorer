@@ -27,12 +27,12 @@ export class MainCustomizeChartsComponent implements OnInit{
       showYAxisLabel : false,
       yAxisLabel : 'Population',
       autoScale : true,
-  }; 
+  };
   curve = shape.curveCardinal;
   blockchainData;
   aggragationData;
   ramPrice;
-  //eos = this.MainService.getGlobalNetConfig();
+  //rsn = this.MainService.getGlobalNetConfig();
   TPSliveTx = 0;
   usersOnline = 0;
   timeForUpdate = 5000;
@@ -44,7 +44,7 @@ export class MainCustomizeChartsComponent implements OnInit{
                   .subscribe(
                       (res: any) => {
                            this.currencyObj = res;
-                           this.MainService.setEosPrice(this.currencyObj);
+                           this.MainService.setRsnPrice(this.currencyObj);
                            setTimeout(() => { this.getData() }, this.timeForUpdate);
                       },
                       (error) => {
@@ -97,7 +97,7 @@ export class MainCustomizeChartsComponent implements OnInit{
   }
 
   getRam(){
-      this.http.get(`/api/v1/get_table_rows/eosio/eosio/rammarket/10`)
+      this.http.get(`/api/v1/get_table_rows/arisen/arisen/rammarket/10`)
           .subscribe((res: any) => {
                           this.countRamPrice(res);
                       },

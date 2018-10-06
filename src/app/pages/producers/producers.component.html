@@ -10,10 +10,10 @@
 <div class="col-sm-4 filter-header">
   <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by producer name">
-  </mat-form-field> 
+  </mat-form-field>
 </div>
-<!--<h3 class="producer-candidate pull-right"><small>our producer candidate: </small> 
-  <strong><a routerLink="/producer/eoswebnetbp1" class="color-green">eoswebnetbp1</a></strong>
+<!--<h3 class="producer-candidate pull-right"><small>our producer candidate: </small>
+  <strong><a routerLink="/producer/jared" class="color-green">jared</a></strong>
 </h3>-->
 
 <div class="example-container mat-elevation-z8 main-table">
@@ -26,7 +26,7 @@
           <strong>{{ element?.index }}</strong>
       </mat-cell>
     </ng-container>
-    
+
     <!-- Name Column -->
     <ng-container matColumnDef="Name">
       <mat-header-cell *matHeaderCellDef class="url-flex"> Name </mat-header-cell>
@@ -46,10 +46,10 @@
           <button mat-raised-button color="warn" class="status" *ngIf="element?.index > 21 && producer !== element.owner">Standby</button>
        </mat-cell>
     </ng-container>
-    
+
     <ng-container matColumnDef="Total Votes">
-      <mat-header-cell *matHeaderCellDef> Total Votes (EOS)</mat-header-cell>
-      <mat-cell *matCellDef="let element"> 
+      <mat-header-cell *matHeaderCellDef> Total Votes (RSN)</mat-header-cell>
+      <mat-cell *matCellDef="let element">
              <strong> {{ element?.total_votes }}</strong>
       </mat-cell>
     </ng-container>
@@ -57,32 +57,32 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="Url">
       <mat-header-cell *matHeaderCellDef class="url-flex"> Url </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="color-light-grey url-flex"> 
+      <mat-cell *matCellDef="let element" class="color-light-grey url-flex">
           <a href="{{element?.url}}" target="_blank" class="color-green">{{element?.url}}</a>
       </mat-cell>
     </ng-container>
-    
+
     <ng-container matColumnDef="Location">
       <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="color-light-grey"> 
+      <mat-cell *matCellDef="let element" class="color-light-grey">
             <img src="/assets/images/flags/{{element?.location}}.svg" width="30" alt="">
       </mat-cell>
     </ng-container>
-    
+
     <!-- Name Column -->
-    
+
         <!-- Name Column -->
     <ng-container matColumnDef="Rate">
       <mat-header-cell *matHeaderCellDef> Rate</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="change-container"> 
+      <mat-cell *matCellDef="let element" class="change-container">
            <strong> {{ element?.rate }} %</strong>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="Rewards">
       <mat-header-cell *matHeaderCellDef> Rewards Per Day</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="change-container"> 
-           <strong> {{ element?.rewards }} EOS</strong>
+      <mat-cell *matCellDef="let element" class="change-container">
+           <strong> {{ element?.rewards }} RSN</strong>
       </mat-cell>
     </ng-container>
 

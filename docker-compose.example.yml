@@ -11,15 +11,14 @@ services:
     environment:
       - MONGODB_ROOT_PASSWORD=test123
 
-  eosweb:
-    image: rost1337/eosweb:latest
-    ports: 
+  arisenexplorer:
+    image: arisen/arisenexplorer:latest
+    ports:
       - 3039:3039
       - 3001:3001
     restart: always
     links:
       - mongodb
     volumes:
-      - ./logs:/home/eosweb/server/logs
-      - ./config.js:/home/eosweb/config.js
-
+      - ./logs:/home/arisenexplorer/server/logs
+      - ./config.js:/home/arisenexplorer/config.js

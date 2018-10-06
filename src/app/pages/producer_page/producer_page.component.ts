@@ -16,7 +16,7 @@ export class ProducerComponent implements OnInit, OnDestroy{
   spinner = false;
   displayedColumns = ['#', 'Name', 'Key', 'Url', 'Votes', 'Rate'];
   dataSource;
-  eosToInt = Math.pow(10, 13);
+  rsnToInt = Math.pow(10, 13);
   totalProducerVoteWeight;
   producer;
   producerId;
@@ -26,20 +26,20 @@ export class ProducerComponent implements OnInit, OnDestroy{
 
   options = {
     layers: [
-       tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18, attribution: 'EOSweb' })
+       tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18, attribution: 'ArisenExplorer' })
     ],
     zoom: 1,
     center: latLng(0, 0)
   };
-  
+
   layers = [];
 
   constructor(private route: ActivatedRoute, protected http: HttpClient, private MainService: MainService){}
 
   getData(){
       this.spinner = true;
-  		let producers = this.http.get(`/api/custom/get_table_rows/eosio/eosio/producers/500`)
-      let global     = this.http.get(`/api/v1/get_table_rows/eosio/eosio/global/1`);
+  		let producers = this.http.get(`/api/custom/get_table_rows/arisen/arisen/producers/500`)
+      let global     = this.http.get(`/api/v1/get_table_rows/arisen/arisen/global/1`);
 
       forkJoin([producers, global])
   				 .subscribe(
@@ -98,14 +98,7 @@ export class ProducerComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    this.producer.unsubscribe(); 
+    this.producer.unsubscribe();
     //this.subscription.unsubscribe();
   }
 }
-
-
-
-
-
-
-

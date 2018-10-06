@@ -44,7 +44,7 @@
     color: #fff;
     margin-top: 3px;
 }
-.logo .name-eos{
+.logo .name-rsn{
 	font-size: 30px;
 }
 .logo .name-explorer{
@@ -140,7 +140,7 @@
 	color: #6de29a;
 }
 .main-nav-right{
-	margin-right: 30px !important; 
+	margin-right: 30px !important;
 }
 .main-nav-right li button{
 	text-transform: inherit;
@@ -221,21 +221,10 @@ footer a{
 	color: #fff;
 	text-decoration: none;
 	font-size: 14px;
-}	
+}
 footer i{
 	font-size: 20px;
 }
 .mainpage-currency-name{
 	width: 50px;
 }
-
-
-
-
-
-
-
-
-
-
-

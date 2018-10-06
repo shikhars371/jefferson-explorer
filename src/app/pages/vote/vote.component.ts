@@ -27,16 +27,16 @@ export class VotePageComponent implements OnInit {
   unstaked = 0;
   staked = 0;
   balance = 0;
-  
+
   identity;
   WINDOW: any = window;
-  eosNetwork = {
-            blockchain: 'eos',
+  rsnNetwork = {
+            blockchain: 'rsn',
             host: '',
             port: '',
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
   };
-  eosOptions = {
+  rsnOptions = {
             broadcast: true,
             sign: true,
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
@@ -46,10 +46,10 @@ export class VotePageComponent implements OnInit {
   vote = {
     voter: '',
     proxy: '',
-    producers: ['eoswebnetbp1', 'cryptolions1']
+    producers: ['arisen', 'jared']
   };
   contract;
-  contractName = 'eosio';
+  contractName = 'arisen';
   contractKeys = {};
   contractMethod = '';
   contractField = {};
@@ -60,7 +60,7 @@ export class VotePageComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
               protected http: HttpClient,
               public dialog: MatDialog,
               private notifications: NotificationsService){}
@@ -80,9 +80,9 @@ export class VotePageComponent implements OnInit {
   }
 
   getBalance(accountId){
-      this.http.get(`/api/v1/get_currency_balance/eosio.token/${accountId}/EOS`)
+      this.http.get(`/api/v1/get_currency_balance/arisen.token/${accountId}/RSN`)
            .subscribe((res: any) => {
-                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]); 
+                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]);
                           if (this.mainData.voter_info && this.mainData.voter_info.staked){
                               this.staked = this.mainData.voter_info.staked / 10000;
                           }
@@ -96,8 +96,8 @@ export class VotePageComponent implements OnInit {
   getWalletAPI(){
        this.http.get(`/api/v1/get_wallet_api`)
           .subscribe((res: any) => {
-                          this.eosNetwork.host = res.host;
-                          this.eosNetwork.port = res.port;
+                          this.rsnNetwork.host = res.host;
+                          this.rsnNetwork.port = res.port;
                           this.protocol = res.protocol;
                       },
                       (error) => {
@@ -152,13 +152,13 @@ export class VotePageComponent implements OnInit {
     }
   }
 
-  loginScatter(){
-    if (!this.WINDOW.scatter){
-        console.error('Please install scatter wallet !');
+  loginArkId(){
+    if (!this.WINDOW.arkid){
+        console.error('Please install arkid wallet !');
     }
-    localStorage.setItem("scatter", 'loggedIn');
-    this.WINDOW.scatter.getIdentity({
-       accounts: [this.eosNetwork]
+    localStorage.setItem("arkid", 'loggedIn');
+    this.WINDOW.arkid.getIdentity({
+       accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
         if (identity && identity.accounts[0] && identity.accounts[0].name){
@@ -169,12 +169,12 @@ export class VotePageComponent implements OnInit {
     });
   }
 
-  logoutScatter(){
-    if (!this.WINDOW.scatter){
-        return this.notifications.error('Scatter error', 'Please install Scatter extension');
+  logoutArkId(){
+    if (!this.WINDOW.arkid){
+        return this.notifications.error('ArkId error', 'Please install ArkId extension');
     }
-    localStorage.setItem('scatter', 'loggedOut');
-    this.WINDOW.scatter.forgetIdentity().then(() => {
+    localStorage.setItem('arkid', 'loggedOut');
+    this.WINDOW.arkid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -189,9 +189,9 @@ export class VotePageComponent implements OnInit {
     if (! this.vote.voter.length){
         return this.notifications.error('Error', 'Please type Voter');
     }
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, this.protocol);
-        eos.contract('eosio', {
-            accounts: [this.eosNetwork]
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        rsn.contract('arisen', {
+            accounts: [this.rsnNetwork]
         }).then(contract => {
             contract.voteproducer({
                 voter: this.vote.voter,
@@ -204,7 +204,7 @@ export class VotePageComponent implements OnInit {
                   this.vote = {
                     voter: '',
                     proxy: '',
-                    producers: ['eoswebnetbp1']
+                    producers: ['arisen']
                   };
             }).catch(err => {
                  console.error(err);
@@ -213,7 +213,7 @@ export class VotePageComponent implements OnInit {
            }).catch(err => {
                 console.error(err);
                 this.notifications.error('Transaction Fail', '');
-           });  
+           });
   }
 
   convertToBytes(string){
@@ -242,13 +242,13 @@ export class VotePageComponent implements OnInit {
   ngOnInit() {
       this.getWalletAPI();
 
-     if (localStorage.getItem("scatter") === 'loggedIn'){
-           if (!this.WINDOW.scatter){
-                document.addEventListener('scatterLoaded', () => {
-                      this.loginScatter();
+     if (localStorage.getItem("arkid") === 'loggedIn'){
+           if (!this.WINDOW.arkid){
+                document.addEventListener('arkidLoaded', () => {
+                      this.loginArkId();
                 });
            } else {
-             this.loginScatter();
+             this.loginArkId();
            }
      }
   }

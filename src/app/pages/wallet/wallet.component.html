@@ -4,10 +4,10 @@
     <mat-spinner class="spinner-color"></mat-spinner>
 </div>
 
-	<h1 class="market-header">EOS web Wallet</h1>
+	<h1 class="market-header">Arisen aWallet (Web)</h1>
 
 	<div class="col-sm-4 block-info-line" *ngIf="!identity">
-		  <button mat-raised-button class="btn-generate" color="primary" (click)="loginScatter()">login with Scatter</button>
+		  <button mat-raised-button class="btn-generate" color="primary" (click)="loginScatter()">login with aRK ID</button>
 	</div>
 
 	<div class="block-info" *ngIf="identity">
@@ -20,19 +20,19 @@
 				  		{{ identity?.accounts[0]?.name }}
 				 	</a>
 			 </div>
-				
+
 			<div class="col-sm-12 acc-list no-padding">
 				  <div class="balance-acc">
-    			     Total Balance: <strong>{{ balance?.toLocaleString() }} EOS</strong>
+    			     Total Balance: <strong>{{ balance?.toLocaleString() }} RSN</strong>
     			  </div>
     			  <div class="balance-acc">
-    			     Unstaked: <small><strong>{{ unstaked?.toLocaleString() }} EOS</strong></small>
+    			     Unstaked: <small><strong>{{ unstaked?.toLocaleString() }} RSN</strong></small>
     			  </div>
     			  <div class="balance-acc">
-    			     Staked: <small><strong>{{ staked?.toLocaleString() }} EOS</strong></small>
+    			     Staked: <small><strong>{{ staked?.toLocaleString() }} RSN</strong></small>
     			  </div>
     		</div>
-    
+
 
     		<div class="col-sm-12 acc-list no-padding">
       				<div class="analytics-header-right top-ten">
@@ -53,7 +53,7 @@
         			<small>{{ (mainData?.net_limit?.used / 1024).toFixed(2) }} kb</small> / <small>{{ (mainData?.net_limit?.max / 1024).toFixed(2) }} kb</small>
       		 	</div>
     		 </div>
-    		 
+
     		 <div class="col-sm-12 acc-list no-padding">
     			  <div class="analytics-header-right top-ten">
     			    RAM:
@@ -78,13 +78,13 @@
   							<mat-form-field>
   							  <input matInput placeholder="To" required="true" [(ngModel)]="transfer.to">
   							</mat-form-field>
-							
+
 							<div class="col-sm-9 no-padding">
 								<mat-form-field>
   							  		<input matInput placeholder="Amount" required="true" [(ngModel)]="transfer.amount">
   								</mat-form-field>
 							</div>
-							
+
 							<div class="col-sm-3 no-padding-right">
 								<mat-form-field>
   							  		<input matInput placeholder="Symbol" required="true" [(ngModel)]="transfer.symbol">

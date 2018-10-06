@@ -13,7 +13,7 @@ const bot         = new TelegramBot(config.telegram.TOKEN, { polling: true });
 module.exports = function(mongoMain){
 
 	const TELEGRAM_USERS = require('../models/telegram.ram.model')(mongoMain);
-	
+
 	bot.onText(/\/start/, (msg, match) => {
 			if (!msg && !msg.chat && !msg.chat.id){
 				return log.error('Wrong chat id 1', msg);
@@ -23,15 +23,15 @@ module.exports = function(mongoMain){
 					return log.error(err);
 				}
 				bot.sendMessage(msg.chat.id, `
-				 Hello and welcome to EOSweb RAM bot alerts :)
+				 Hello and welcome to AriseExplorer RAM bot alerts :)
 				 	Queries example:
 					- /high 0.34 (Set top RAM position)
-					- /low 0.26 
-					- /stop_loss 0.3 
+					- /low 0.26
+					- /stop_loss 0.3
 					- /info  (Get info about your bot parameters)
-					- /price (Get gurrent RAM price) 
-					- /high 0 (disable high) 
-					- /low 0, 
+					- /price (Get gurrent RAM price)
+					- /high 0 (disable high)
+					- /low 0,
 					- /stop_loss 0
 					- /disable (disable bot)
 					- /enable (enable bot)
@@ -101,21 +101,21 @@ module.exports = function(mongoMain){
 				bot.sendMessage(msg.chat.id, `High = ${ result.high }, Low = ${ result.low }, Stop Loss = ${ result.stopLoss }, active = ${result.active}`);
 			});
 	});
-    
+
     bot.onText(/\/price/, (msg, match) => {
 			if (!msg && !msg.chat && !msg.chat.id){
 				return log.error('Wrong chat id 5', msg);
 			}
-			global.eos.getTableRows({
+			global.rsn.getTableRows({
 	               json: true,
-	               code: "eosio",
-	               scope: "eosio",
+	               code: "arisen",
+	               scope: "arisen",
 	               table: "rammarket",
 	               limit: 10
 	           })
 	            .then(result => {
 					let ramPrice = countRamPrice(result);
-					bot.sendMessage(msg.chat.id, `ram price = ${ramPrice.toFixed(5)} EOS`);
+					bot.sendMessage(msg.chat.id, `ram price = ${ramPrice.toFixed(5)} RSN`);
 				});
 	});
 
@@ -130,7 +130,7 @@ module.exports = function(mongoMain){
 				bot.sendMessage(msg.chat.id,`Bot successfully disabled!`);
 			});
 	});
-	
+
 	bot.onText(/\/enable/, (msg, match) => {
 			if (!msg && !msg.chat && !msg.chat.id){
 				return log.error('Wrong chat id 7', msg);
@@ -145,21 +145,21 @@ module.exports = function(mongoMain){
 
 	function getRamPrice(){
 		setTimeout(() => {
-			global.eos.getTableRows({
+			global.rsn.getTableRows({
 	               json: true,
-	               code: "eosio",
-	               scope: "eosio",
+	               code: "arisen",
+	               scope: "arisen",
 	               table: "rammarket",
 	               limit: 10
 	           })
 	            .then(result => {
 					let ramPrice = countRamPrice(result);
-					//log.info('==== ram', ramPrice, 'EOS');
+					//log.info('==== ram', ramPrice, 'RSN');
 					findActiveUsers(TELEGRAM_USERS, ramPrice, (err, result) => {
 							if (err){
 								   log.error(err);
 							}
-							let message = `ram price = ${ramPrice.toFixed(5)} EOS, https://eosweb.net/ram`;
+							let message = `ram price = ${ramPrice.toFixed(5)} RSN, https://arisenproducers.com/ram`;
 							if (result && result.high){
 								result.high.forEach(elem => {
 								  	bot.sendMessage(elem.chatId, `High - ${message}`);
@@ -208,7 +208,7 @@ function findActiveUsers(TELEGRAM_USERS, price, callback){
 			},
 			stopLoss: cb => {
 				TELEGRAM_USERS.find({ active: true, stopLoss: { $gte: price, $ne: 0 } }, cb);
-			} 
+			}
 		}, (err, result) => {
 		 		if (err){
 		 			return callback(err);
@@ -228,7 +228,7 @@ function saveUser(TELEGRAM_USERS, message, callback){
 		 		}
 		 		let user = new TELEGRAM_USERS({
 		 			chatId: message.chat.id,
-		 			userName: message.chat.username  
+		 			userName: message.chat.username
 		 		});
 		 		user.save(err => {
 		 			if (err){
@@ -251,5 +251,3 @@ function countRamPrice(result) {
         }
         return quoteBalance / baseBalance * 1024;
 }
-
-

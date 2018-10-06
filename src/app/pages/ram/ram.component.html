@@ -5,19 +5,19 @@
 </div>
 
 <div class="col-sm-9 padding-left-no">
-   <h1 class="market-header col-sm-6">EOS RAM price <small>EOS/kb RAM</small></h1>
+   <h1 class="market-header col-sm-6">RSN RAM price <small>RSN/kb RAM</small></h1>
    <div class="col-sm-6 button-menu-container">
      <button mat-raised-button color="primary" class="pull-right" [matMenuTriggerFor]="menu">{{ defaultTimeName }}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let elem of timeArray;" (click)="selectDay(elem)">{{ elem }}</button>
       </mat-menu>
-      <a mat-mini-fab color="primary" class="pull-right alert-button" href="https://t.me/EOSwebRamBot" target="_blank"><i class="fas fa-bell"></i></a>
+      <a mat-mini-fab color="primary" class="pull-right alert-button" href="https://t.me/arisenproducers" target="_blank"><i class="fas fa-bell"></i></a>
    </div>
-   
+
    <ngx-charts-line-chart *ngIf="mainCurrencyChartDataRes"
               [view]="ngxChartOptions.view"
               [scheme]="ngxChartOptions.colorScheme"
-              [results]="[{ name: 'EOS/kb', series: mainCurrencyChartDataRes || [{name: '0', value: 1}] }]"
+              [results]="[{ name: 'RSN/kb', series: mainCurrencyChartDataRes || [{name: '0', value: 1}] }]"
               [gradient]="ngxChartOptions.gradient"
               [xAxis]="ngxChartOptions.showXAxis"
               [yAxis]="ngxChartOptions.showYAxis"
@@ -29,12 +29,12 @@
               [autoScale]="ngxChartOptions.autoScale"
               [timeline]="ngxChartOptions.timeline"
               [curve]="curve">
- </ngx-charts-line-chart> 
+ </ngx-charts-line-chart>
 </div>
 <div class="col-sm-3 padding-right-no text-right analytics-container-right">
     <div class="col-sm-12">
-      <div class="analytics-header-right">EOS RAM price:</div>
-      <div class="analytics-text-right">{{ ramPrice }} EOS/kb</div>
+      <div class="analytics-header-right">RSN RAM price:</div>
+      <div class="analytics-text-right">{{ ramPrice }} RSN/kb</div>
     </div>
 
     <div class="col-sm-12">
@@ -54,7 +54,7 @@
 
     <div class="col-sm-12" *ngIf="!identity">
       <div class="analytics-header-right">
-        <button mat-raised-button color="primary" class="btn-generate" (click)="loginScatter()">login with Scatter</button>
+        <button mat-raised-button color="primary" class="btn-generate" (click)="loginScatter()">login with aRK ID</button>
       </div>
     </div>
     <div class="col-sm-12" *ngIf="identity">
@@ -62,7 +62,7 @@
         <button mat-raised-button color="primary"  (click)="logoutScatter()">Logout</button>
       </div>
     </div>
-    
+
     <div class="col-sm-6" *ngIf="identity">
       <div class="analytics-header-right">
         Account:
@@ -79,10 +79,10 @@
          Unstake:
       </div>
       <div class="analytics-text-right">
-        {{ unstaked?.toLocaleString() }} EOS
+        {{ unstaked?.toLocaleString() }} RSN
       </div>
     </div>
-    
+
     <div class="col-sm-12" *ngIf="identity">
       <div class="analytics-header-right top-ten">
         RAM:
@@ -112,7 +112,7 @@
         <small>{{ (mainData?.net_limit?.used / 1024).toFixed(2) }} kb</small> / <small>{{ (mainData?.net_limit?.max / 1024).toFixed(2) }} kb</small>
       </div>
     </div>
-  
+
 </div>
 
 <div class="col-sm-5" *ngIf="identity">
@@ -120,7 +120,7 @@
       <mat-tab label="Buy ram">
         <div class="col-sm-4">
             <mat-form-field>
-                <input matInput placeholder="EOS" [(ngModel)]="buyRAM.eos" (ngModelChange)="buyChangeEOS($event)">
+                <input matInput placeholder="RSN" [(ngModel)]="buyRAM.rsn" (ngModelChange)="buyChangeRSN($event)">
             </mat-form-field>
         </div>
         <div class="col-sm-4">
@@ -129,13 +129,13 @@
             </mat-form-field>
         </div>
         <div class="col-sm-3">
-               <button mat-raised-button color="primary" (click)="funcBuyRAM(buyRAM.eos)">Buy Ram</button>
+               <button mat-raised-button color="primary" (click)="funcBuyRAM(buyRAM.rsn)">Buy Ram</button>
         </div>
       </mat-tab>
       <mat-tab label="Sell ram">
         <div class="col-sm-4">
             <mat-form-field>
-                <input matInput placeholder="EOS" [(ngModel)]="sellRAM.eos" (ngModelChange)="sellChangeEOS($event)">
+                <input matInput placeholder="RSN" [(ngModel)]="sellRAM.rsn" (ngModelChange)="sellChangeRSN($event)">
             </mat-form-field>
         </div>
         <div class="col-sm-4">
@@ -150,7 +150,7 @@
       <mat-tab label="Donate">
         <div class="col-sm-4">
             <mat-form-field>
-                <input matInput placeholder="EOS" [(ngModel)]="donation">
+                <input matInput placeholder="RSN" [(ngModel)]="donation">
             </mat-form-field>
         </div>
         <div class="col-sm-3">
@@ -162,13 +162,13 @@
 
 <div class="col-sm-7 order-history-table" *ngIf="identity">
       <div class="example-container mat-elevation-z8 main-table block-trx-table">
-          
-            <mat-table #table [dataSource]="dataSource" class="big-table" matSort>  
+
+            <mat-table #table [dataSource]="dataSource" class="big-table" matSort>
 
               <!-- Weight Column -->
               <ng-container matColumnDef="Tx">
                 <mat-header-cell *matHeaderCellDef> Tx id</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-cell *matCellDef="let element">
                       <strong>
                         <a [routerLink]="['/transaction', element?.tx_id ]" class="color-green tx-hash">{{ element?.tx_id }}</a>
                       </strong>
@@ -177,30 +177,30 @@
 
               <ng-container matColumnDef="Price">
                 <mat-header-cell *matHeaderCellDef> Price</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-cell *matCellDef="let element">
                     <strong>
-                        {{ parseNumber(element?.price) }} EOS
+                        {{ parseNumber(element?.price) }} RSN
                     </strong>
                 </mat-cell>
               </ng-container>
-            
+
             <ng-container matColumnDef="Type">
                 <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-cell *matCellDef="let element">
                       <strong>{{ element?.type }}</strong>
                 </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="Amount">
                 <mat-header-cell *matHeaderCellDef> Amount</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-cell *matCellDef="let element">
                        <strong>{{ element?.amount / 1024 }} kb</strong>
                 </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="Date">
                 <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-cell *matCellDef="let element">
                       {{ moment(element?.date).format('lll') }}
                 </mat-cell>
               </ng-container>

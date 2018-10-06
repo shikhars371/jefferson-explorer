@@ -20,7 +20,7 @@ const mongoMain  = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTI
       log.error(err);
       process.exit(1);
     }
-    log.info('[Connected to Mongo EOS in PRODUCERS daemon] : 27017');
+    log.info('[Connected to Mongo RSN in PRODUCERS daemon] : 27017');
 });
 
 const TABLE = require('../models/producers.model')(mongoMain);
@@ -35,8 +35,8 @@ function updatePrucersInfo(){
 		 async.waterfall([
 		 	(callback) => {
 	   			let formData = { json: true,
-					      code: "eosio",
-					      scope: "eosio",
+					      code: "arisen",
+					      scope: "arisen",
 					      table: "producers",
 					      limit: PRODUCERS_LIMITS
 				};
@@ -46,7 +46,7 @@ function updatePrucersInfo(){
 	   	 				 	return callback(error);
 	   					}
     					callback(null, body);
-	   			});	
+	   			});
 		 	},
 		 	(result, callback) => {
 		 		async.eachLimit(result.rows, config.limitAsync, (elem, cb) => {
@@ -93,7 +93,7 @@ function updatePrucersInfo(){
 }
 
 function saveProducerInfo(bp, callback){
-	if (!bp || !bp.producer_account_name || !bp.org || !bp.org.location || 
+	if (!bp || !bp.producer_account_name || !bp.org || !bp.org.location ||
 		!bp.org.location.country || !bp.org.branding || !bp.org.branding.logo_256){
 	 		return callback("Wong bp.json !!!!");
 	}
@@ -106,34 +106,21 @@ function saveProducerInfo(bp, callback){
 				 		let producer = new TABLE(updateObg);
 				 		producer.save((err) => {
 				 			if (err){
-				 				return callback(err); 
+				 				return callback(err);
 				 			}
 				 			callback(null);
 				 		});
 				 	} else {
 				 	  TABLE.update({ name: bp.producer_account_name }, updateObg, (err) => {
 				 	  		if (err){
-				 				return callback(err); 
+				 				return callback(err);
 				 			}
 				 			callback(null);
 				 	  });
 				 	}
-				 	
-				 });	
+
+				 });
 }
 
 
 updatePrucersInfo();
-
-
-
-
-
-
-
-
-
-
-
-
-

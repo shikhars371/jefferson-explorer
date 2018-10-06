@@ -3,9 +3,9 @@ const async			= require('async');
 const mongoose      = require("mongoose");
 const config      	= require('../../config');
 
-const EOS     		= require('eosjs');
-config.eosConfig.httpEndpoint =  (config.CRON) ? config.CRON_API : config.eosConfig.httpEndpoint;
-const eos     		= EOS(config.eosConfig);
+const RSN     		= require('arisenjs');
+config.rsnConfig.httpEndpoint =  (config.CRON) ? config.CRON_API : config.rsnConfig.httpEndpoint;
+const rsn     		= RSN(config.rsnConfig);
 
 const log4js      = require('log4js');
 log4js.configure(config.logger);
@@ -21,7 +21,7 @@ const mongoMain  = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTI
       log.error(err);
       process.exit(1);
     }
-    log.info('[Connected to Mongo EOS in accounts daemon] : 27017');
+    log.info('[Connected to Mongo RSN in accounts daemon] : 27017');
 });
 
 const STATS_ACCOUNT = require('../models/api.accounts.model')(mongoMain);
@@ -54,8 +54,8 @@ function getAccountAggregation (){
 			});
 		},
 		(stat, cb) => {
-			eos.getInfo({})
-			   	.then(result => { 
+			rsn.getInfo({})
+			   	.then(result => {
 			   		if (!result.last_irreversible_block_num){
 			   			return cb('Cant get info from blockchain getAccountAggregation!');
 			   		}
@@ -68,7 +68,7 @@ function getAccountAggregation (){
 		},
 		(stat, result, elements, cb) => {
 			async.eachLimit(elements, config.limitAsync, (elem, ret) => {
-			   	eos.getBlock({ block_num_or_id: elem })
+			   	rsn.getBlock({ block_num_or_id: elem })
 			   		.then(block => {
 			   			if (block.transactions && block.transactions.length > 0){
 			   				transactionsAggregate(block.transactions, stat, () => {
@@ -149,7 +149,7 @@ function transactionsAggregate (trx, stat, callback){
 	   		});
 	   	}, (err) => {
 	   		if (err){
-	   			log.error(err);	
+	   			log.error(err);
 	   		}
 	   		cbTx();
 	   	});
@@ -162,7 +162,3 @@ function transactionsAggregate (trx, stat, callback){
 }
 
 getAccountAggregation();
-
-
-
-

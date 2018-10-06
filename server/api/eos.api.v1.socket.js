@@ -1,11 +1,11 @@
 /*
-   Created by eoswebnetbp1
+   Created by rsnwebnetbp1
 */
 
 const config          = require('../../config.js');
 const async           = require('async');
-const customFunctions = require('./eos.api.v1.custom');
-const EOS             = require('eosjs');
+const customFunctions = require('./rsn.api.v1.custom');
+const RSN             = require('arisenjs');
 
 const log4js = require('log4js');
 log4js.configure(config.logger);
@@ -39,10 +39,10 @@ module.exports = function(io, mongoMain){
           log.info('====== No users online');
           return setTimeout(getDataSocket, updateTimeBlocks);;
       }
-      let timeRequestStart = +new Date(); 
+      let timeRequestStart = +new Date();
       async.parallel({
         info: cb => {
-          global.eos.getInfo({})
+          global.rsn.getInfo({})
              .then(stat => {
                 cb(null, stat);
              })
@@ -52,7 +52,7 @@ module.exports = function(io, mongoMain){
              });
         },
         blocks: cb => {
-          customFunctions.getLastBlocks(global.eos, blocks, (err, result) => {
+          customFunctions.getLastBlocks(global.rsn, blocks, (err, result) => {
                       if (err){
                           log.error(err);
                           return cb('No result');
@@ -70,10 +70,10 @@ module.exports = function(io, mongoMain){
           });
         },
         ram: cb => {
-              global.eos.getTableRows({
+              global.rsn.getTableRows({
                   json: true,
-                  code: "eosio",
-                  scope: "eosio",
+                  code: "arisen",
+                  scope: "arisen",
                   table: "rammarket",
                   limit: 10
               })
@@ -96,7 +96,7 @@ module.exports = function(io, mongoMain){
                     });
                     ram.save(err => {
                        if (err) {
-                        return cb(err); 
+                        return cb(err);
                        }
                        log.info('ram market price data ========= ', ram);
                        cb(null, result);
@@ -139,13 +139,13 @@ module.exports = function(io, mongoMain){
           let date = +new Date();
           if (err){
              console.error('========= ', err);
-             // change nodeos API 
+             // change aOS API
              if (date > SOCKET_HANGUP_TIME){
                  changeAPI += 1;
-                 changeAPI = (config.endpoints.length === changeAPI) ? 0 : changeAPI; 
-                 config.eosConfig.httpEndpoint = config.endpoints[changeAPI];
-                 global.eos = EOS(config.eosConfig);
-                 logSlack(`Change API to [${config.eosConfig.httpEndpoint}], socket error - ${err}`);
+                 changeAPI = (config.endpoints.length === changeAPI) ? 0 : changeAPI;
+                 config.rsnConfig.httpEndpoint = config.endpoints[changeAPI];
+                 global.rsn = RSN(config.rsnConfig);
+                 logSlack(`Change API to [${config.rsnConfig.httpEndpoint}], socket error - ${err}`);
                  SOCKET_HANGUP_TIME = date + 60000;
               }
           } else {
@@ -179,13 +179,13 @@ module.exports = function(io, mongoMain){
   });
 
   function getTPS(){
-      let timeRequestStart = +new Date(); 
-      customFunctions.getLastBlocks(eos, [1, 2], (err, result) => {
+      let timeRequestStart = +new Date();
+      customFunctions.getLastBlocks(rsn, [1, 2], (err, result) => {
             if (err){
                 console.error(err);
                 return setTimeout(getTPS, updateTPS);
             }
-            
+
             io.to(SOCKET_ROOM).emit('get_tps_blocks', result);
 
             let date = +new Date();
@@ -205,8 +205,5 @@ module.exports = function(io, mongoMain){
   getDataSocket();
   getTPS();
 
-  // === end function export 
+  // === end function export
 }
-
-
-

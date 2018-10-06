@@ -8,34 +8,34 @@ module.exports = function(router, config, request, log) {
 	const indexPath = path.join(__dirname, '../../dist/index.html');
 
 	router.get('/', (req, res) => {
-		//res.cookie('netsConf', JSON.stringify(config.eosInfoConfigs), { path: '/' });
+		//res.cookie('netsConf', JSON.stringify(config.rsnInfoConfigs), { path: '/' });
 	   	res.sendFile(indexPath);
 	});
 
 	router.get('/block/:id', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/account/:id', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/address/:id', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/producers', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/producer/:id', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/analytics', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
-	
+
 	router.get('/accounts', (req, res) => {
 	   	res.sendFile(indexPath);
 	});
@@ -75,21 +75,5 @@ module.exports = function(router, config, request, log) {
 	router.get('/robots.txt', (req, res) => {
 	   	res.sendFile(path.join(__dirname, '../../robots.txt'));
 	});
-// ============== END of exports 
+// ============== END of exports
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

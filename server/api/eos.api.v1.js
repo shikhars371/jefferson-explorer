@@ -1,10 +1,10 @@
 /*
-   Created by eoswebnetbp1
+   Created by rsnwebnetbp1
 */
 
 const async = require('async');
 const path = require('path');
-const customFunctions = require('./eos.api.v1.custom');
+const customFunctions = require('./rsn.api.v1.custom');
 
 module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 
@@ -30,7 +30,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 
 		async.parallel({
 			block: (cb) =>{
-        		global.eos.getBlock({ block_num_or_id: text })
+        		global.rsn.getBlock({ block_num_or_id: text })
 	   			 	.then(result => {
 	   			 		cb(null, result);
 	   			 	})
@@ -40,7 +40,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	   			 	});
 			},
 			transaction: (cb) =>{
-				global.eos.getTransaction({ id: text })
+				global.rsn.getTransaction({ id: text })
 	   			 	.then(result => {
 	   			 		cb(null, result);
 	   			 	})
@@ -49,7 +49,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	   			 	});
 			},
 			account: (cb) =>{
-				global.eos.getAccount({ account_name: text })
+				global.rsn.getAccount({ account_name: text })
 	   			 	.then(result => {
 	   			 		cb(null, result);
 	   			 	})
@@ -58,7 +58,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	   			 	});
 			},
 			key: (cb) => {
-				global.eos.getKeyAccounts({ public_key: text })
+				global.rsn.getKeyAccounts({ public_key: text })
 	   	 			.then(result => {
 	   	 				cb(null, result);
 	   	 			})
@@ -67,7 +67,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	   	 			});
 			},
 			contract: (cb) =>{
-				global.eos.getCode({ json: true, account_name: text })
+				global.rsn.getCode({ json: true, account_name: text })
 	   	 			.then(result => {
 	   	 				cb(null, result)
 	   	 			})
@@ -87,7 +87,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	router.get('/api/v1/get_wallet_api', (req, res) => {
 		res.json({ host: config.walletAPI.host, port: config.walletAPI.port, protocol: config.walletAPI.protocol });
 	});
-	
+
 
 	router.get('/api/v1/get_producers_bp_json', (req, res) => {
 		PRODUCERS.find({}, (err, result) => {
@@ -174,7 +174,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	*/
 	router.get('/api/v1/get_accounts_analytics/:offset', (req, res) => {
 		 STATS_ACCOUNT.find()
-	   	 		.sort({ balance_eos: -1 })
+	   	 		.sort({ balance_rsn: -1 })
 	   	 		.limit(Number(req.params.offset))
 	   	 		.exec((err, result) => {
 	   	 		if (err){
@@ -212,7 +212,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - block_num_or_id
 	*/
 	router.get('/api/v1/get_block/:block_num_or_id', (req, res) => {
-	   	 global.eos.getBlock({ block_num_or_id: req.params.block_num_or_id })
+	   	 global.rsn.getBlock({ block_num_or_id: req.params.block_num_or_id })
 	   	 	.then(result => {
 	   	 		res.json(result);
 	   	 	})
@@ -232,7 +232,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 		for(let i = 0; i <= offset; i++){
 			elements.push(i);
 		}
-		customFunctions.getLastBlocks(eos, elements, (err, result) => {
+		customFunctions.getLastBlocks(rsn, elements, (err, result) => {
 				if (err){
 					log.error(err);
 					return res.status(501).end();
@@ -258,7 +258,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* router - get blocks producers
 	*/
 	router.get('/api/v1/get_producers/:offset', (req, res) => {
-	   	 global.eos.getProducers({
+	   	 global.rsn.getProducers({
       			json: true,
       			lower_bound: "string",
       			limit: req.params.offset
@@ -277,8 +277,8 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - account name
 	*/
 	router.get('/api/v1/get_code/:account', (req, res) => {
-	   	 	let data =  { 
-				account_name: req.params.account 
+	   	 	let data =  {
+				account_name: req.params.account
 			};
 	   	 	request.post({url: `${config.customChain}/v1/chain/get_abi`, json: data }).pipe(res);
 	});
@@ -288,8 +288,8 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - account name
 	*/
 	router.get('/api/v1/get_raw_code_and_abi/:account', (req, res) => {
-			let data =  { 
-				account_name: req.params.account 
+			let data =  {
+				account_name: req.params.account
 			};
 	   	 	request.post({url: `${config.customChain}/v1/chain/get_raw_code_and_abi`, json: data }).pipe(res);
 	});
@@ -298,7 +298,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* router - get currency balance
 	*/
 	router.get('/api/v1/get_currency_balance/:code/:account/:symbol', (req, res) => {
-	   	 global.eos.getCurrencyBalance({
+	   	 global.rsn.getCurrencyBalance({
       			code: req.params.code,
       			account: req.params.account,
       			symbol: req.params.symbol
@@ -316,7 +316,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* router - get_table_rows
 	*/
 	router.get('/api/v1/get_table_rows/:code/:scope/:table/:limit', (req, res) => {
-	   	 global.eos.getTableRows({
+	   	 global.rsn.getTableRows({
 			      json: true,
 			      code: req.params.code,
 			      scope: req.params.scope,
@@ -349,7 +349,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	});
 
 	router.post('/api/producer', (req, res) => {
-		if (req.body.url && req.body.url.indexOf('eosweb.net') >= 0 ){
+		if (req.body.url && req.body.url.indexOf('rsnweb.net') >= 0 ){
 			return res.sendFile(path.join(__dirname, '../../bp.json'));
 		}
 	   	request.get(`${req.body.url}`).pipe(res);
@@ -363,7 +363,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	   	let formData = { json: true,
 			    account_name: req.params.account_name,
 	   	 		pos: req.params.position,
-	   	 		offset: (config.historyNewAPI) ? Math.abs(req.params.offset) : req.params.offset 
+	   	 		offset: (config.historyNewAPI) ? Math.abs(req.params.offset) : req.params.offset
 		};
 	   	request.post({url:`${config.historyChain}/v1/history/get_actions`, json: formData}).pipe(res);
 	});
@@ -400,7 +400,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - transaction_id_type
 	*/
 	router.get('/api/v1/get_transactions', (req, res) => {
-	   	 global.eos.getTransactions({})
+	   	 global.rsn.getTransactions({})
 	   	 	.then(result => {
 	   	 		res.json(result);
 	   	 	})
@@ -414,7 +414,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* router - get_info
 	*/
 	router.get('/api/v1/get_info', (req, res) => {
-	   	 global.eos.getInfo({})
+	   	 global.rsn.getInfo({})
 	   	 	.then(result => {
 	   	 		res.json(result);
 	   	 	})
@@ -432,7 +432,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - code: 'name', symbol: 'string'
 	*/
 	router.get('/api/v1/get_currency_stats/:code/:symbol', (req, res) => {
-	   	 global.eos.getCurrencyStats({
+	   	 global.rsn.getCurrencyStats({
 	   	 		code: req.params.code,
 	   	 		symbol: req.params.symbol
 	   	 	})
@@ -452,7 +452,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - name
 	*/
 	router.get('/api/v1/get_account/:name', (req, res) => {
-	   	 global.eos.getAccount({
+	   	 global.rsn.getAccount({
 	   	 		account_name: req.params.name
 	   	 	})
 	   	 	.then(result => {
@@ -472,7 +472,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - name
 	*/
 	router.get('/api/v1/get_currency_stats/:code/:symbol', (req, res) => {
-	   	 global.eos.getAccount({
+	   	 global.rsn.getAccount({
 	   	 		code: req.params.code,
 	   	 		//symbol: req.params.symbol
 	   	 	})
@@ -486,29 +486,5 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	});
 	//============ END of Account API
 
-// ============== end of exports 
+// ============== end of exports
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

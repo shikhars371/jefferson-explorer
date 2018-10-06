@@ -25,7 +25,7 @@ export class TokensPageComponent implements OnInit{
   /*@ViewChild(MatSort) sort: MatSort;*/
 
   constructor(protected http: HttpClient){}
-	
+
   getBlockData(){
       this.spinner = true;
       this.http.get(`/api/v1/get_tokens`)
@@ -52,4 +52,3 @@ export class TokensPageComponent implements OnInit{
       this.getBlockData();
   }
 }
-

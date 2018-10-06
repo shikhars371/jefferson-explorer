@@ -3,7 +3,7 @@
 <div class="spinner-container" *ngIf="spinner">
     <mat-spinner class="spinner-color"></mat-spinner>
 </div>
-	
+
 	<h1 class="market-header">Account: {{ mainData?.account_name }}</h1>
 
 	<div class="block-info">
@@ -16,23 +16,23 @@
 					<small>{{ mainData?.privileged }}</small>
 				</div>
 			</div>
-			
+
 			<div class="col-sm-12 block-info-line">
 				<div class="col-sm-3">
 					<strong class="block-info-header">Total Balance:</strong>
 				</div>
 				<div class="col-sm-9">
-					<strong>{{ balance?.toLocaleString() }} EOS</strong> / 
-					<small>{{ (balance * eosRate?.RAW?.EOS?.USD?.PRICE).toLocaleString() }} USD</small>
+					<strong>{{ balance?.toLocaleString() }} ERSNOS</strong> /
+					<small>{{ (balance * rsnRate?.RAW?.RSN?.USD?.PRICE).toLocaleString() }} USD</small>
 				</div>
 			</div>
-			
+
 			<div class="col-sm-12 block-info-line">
 				<div class="col-sm-3">
 					<strong class="block-info-header">Unstaked:</strong>
 				</div>
 				<div class="col-sm-9">
-					<small><strong>{{ unstaked }} EOS</strong></small>
+					<small><strong>{{ unstaked }} RSN</strong></small>
 				</div>
 			</div>
 
@@ -41,7 +41,7 @@
 					<strong class="block-info-header">Staked:</strong>
 				</div>
 				<div class="col-sm-9">
-					<small><strong>{{ mainData?.voter_info?.staked / 10000 }} EOS</strong></small>
+					<small><strong>{{ mainData?.voter_info?.staked / 10000 }} RSN</strong></small>
 				</div>
 			</div>
 
@@ -61,7 +61,7 @@
 					<strong class="block-info-header">Token Balance:</strong>
 				</div>
 				<div class="col-sm-9">
-					<small><strong>{{ balance.toLocaleString() }} EOS</strong></small>
+					<small><strong>{{ balance.toLocaleString() }} RSN</strong></small>
 				</div>
 			</div>-->
 
@@ -121,7 +121,7 @@
 					<strong class="block-info-header">Tokens:</strong>
 				</div>
 				<div class="col-sm-9 tokens-container">
-					<strong *ngFor="let token of tokensArray;" class="small-tokens"><small>{{ token?.amount }}</small> {{ token?.currency }} - 
+					<strong *ngFor="let token of tokensArray;" class="small-tokens"><small>{{ token?.amount }}</small> {{ token?.currency }} -
 						<a [routerLink]="['/account', token?.issuer ]" class="color-green">{{ token?.issuer }}</a>
 					</strong>
 				</div>
@@ -136,7 +136,7 @@
 					<span class="account-info"> NET weight: <small>{{ mainData?.total_resources?.net_weight }}</small></span>
 					<span class="account-info"> Owner: <small>{{ mainData?.total_resources?.owner }}</small></span>
 				</div>
-			</div>	
+			</div>
 
 			<div class="col-sm-12 block-info-line">
 				<div class="col-sm-3">
@@ -269,18 +269,18 @@
 											{{ action?.action_trace?.trx_id }}
 										</a>
 									</div>
-								  </div>		 
+								  </div>
 						</div>
 				  </mat-tab>
 				  <mat-tab label="Actions info">
 				  	<div class="example-container mat-elevation-z8 main-table block-trx-table" *ngIf="actions?.actions.length">
-					
-					  <mat-table #table [dataSource]="dataSource" class="big-table" matSort>	
+
+					  <mat-table #table [dataSource]="dataSource" class="big-table" matSort>
 
 					    <!-- Weight Column -->
 					    <ng-container matColumnDef="actions">
 					      <mat-header-cell *matHeaderCellDef class="actions-list-container"> Actions Info</mat-header-cell>
-					      <mat-cell *matCellDef="let element"> 
+					      <mat-cell *matCellDef="let element">
 					          	<!--{{element?.actions}}-->
 								<div *ngFor="let action of element?.actions" class="actions-list-container">
 
@@ -300,7 +300,7 @@
 					    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 					    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 					  </mat-table>
-					
+
 					  <!--<mat-paginator #paginator
 					                 [pageSize]="100"
 					                 [pageSizeOptions]="[50, 100]">
@@ -314,36 +314,36 @@
 
 				  <mat-tab label="Permissions ({{ mainData?.permissions.length }})">
 				  	<div class="example-container mat-elevation-z8 main-table block-trx-table">
-					
-					  <mat-table #table [dataSource]="dataSourcePermission" class="big-table" matSort>	
+
+					  <mat-table #table [dataSource]="dataSourcePermission" class="big-table" matSort>
 
 					    <!-- Weight Column -->
 					    <ng-container matColumnDef="Permission">
 					      <mat-header-cell *matHeaderCellDef> Permission</mat-header-cell>
-					      <mat-cell *matCellDef="let element"> 
+					      <mat-cell *matCellDef="let element">
 					          	<strong>{{ element?.perm_name }}</strong>
 					      </mat-cell>
 					    </ng-container>
 
 					    <ng-container matColumnDef="Address">
 					      <mat-header-cell *matHeaderCellDef class="account-address"> Account/Address</mat-header-cell>
-					      <mat-cell *matCellDef="let element" class="account-address"> 
+					      <mat-cell *matCellDef="let element" class="account-address">
 					          	<a [routerLink]="['/address', element?.required_auth?.keys[0]?.key || '' ]" class="color-green">
 					          		{{ element?.required_auth?.keys[0]?.key }}
 					          	</a>
 					      </mat-cell>
 					    </ng-container>
-						
+
 						<ng-container matColumnDef="Threshold">
 					      <mat-header-cell *matHeaderCellDef> Threshold</mat-header-cell>
-					      <mat-cell *matCellDef="let element"> 
+					      <mat-cell *matCellDef="let element">
 					          	{{ element?.required_auth?.threshold }}
 					      </mat-cell>
 					    </ng-container>
 
 						<ng-container matColumnDef="Weight">
 					      <mat-header-cell *matHeaderCellDef> Weight</mat-header-cell>
-					      <mat-cell *matCellDef="let element"> 
+					      <mat-cell *matCellDef="let element">
 					          	{{ element?.required_auth?.keys[0]?.weight }}
 					      </mat-cell>
 					    </ng-container>
@@ -358,12 +358,12 @@
 				  		  <div *ngFor="let acc of controlledAccount?.controlled_accounts;" class="controlled-acc">
 				  		  	<a [routerLink]="['/account', acc ]" class="color-green">
 					          		<strong>{{ acc }}</strong>
-					      	</a> 
+					      	</a>
 				  		  </div>
 				  </mat-tab>
 
 				</mat-tab-group>
 			</div>
-			
+
 	</div>
 </div>

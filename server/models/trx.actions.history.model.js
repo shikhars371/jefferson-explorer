@@ -1,5 +1,5 @@
 /*
-   Created by eoswebnetbp1
+   Created by jared
 */
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -9,11 +9,11 @@ var TABLE_NAME = 'TRX_ACTIONS';
 var MODEL;
 
 var API = new mongoose.Schema({
-  transactions: { 
+  transactions: {
     type: Number,
     index: true
   },
-  actions: { 
+  actions: {
     type: Number,
     index: true
   },
@@ -34,6 +34,3 @@ module.exports = function (connection) {
   }
   return MODEL;
 };
-
-
-

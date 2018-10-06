@@ -1,5 +1,5 @@
 /*
-  Created by eoswebnetbp1 
+  Created by jared
 */
 require('appmetrics-dash').monitor();
 const express       = require('express');
@@ -18,8 +18,8 @@ const mariaDB       = require('mariasql');
 const mongoose      = require("mongoose");
 mongoose.set('useCreateIndex', true);
 
-const EOS           = require('eosjs');
-global.eos          = EOS(config.eosConfig);
+const RSN           = require('arisenjs');
+global.rsn          = RSN(config.rsnConfig);
 
 const log4js        = require('log4js');
 log4js.configure(config.logger);
@@ -42,7 +42,7 @@ const mongoMain = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTIO
       log.error(err);
       process.exit(1);
     }
-    log.info('[Connected to Mongo EOS] : 27017');
+    log.info('[Connected to Mongo RSN] : 27017');
 });
 
 const app  = express();
@@ -70,7 +70,7 @@ server.on('listening', onListening);
 
 //========= socket io connection
 const io  = require('socket.io').listen(server);
-require(`./api/eos.api.${config.apiV}.socket`)(io, mongoMain);
+require(`./api/rsn.api.${config.apiV}.socket`)(io, mongoMain);
 
 if (config.CRON){
     require('./crons/main.cron')();
@@ -80,7 +80,7 @@ if (config.telegram.ON){
 }
 if (config.MARIA_DB_ENABLE){
     const MARIA = new mariaDB(config.MARIA_DB);
-    require(`./api/eos.api.${config.apiV}.tokens`)(app, log, MARIA);
+    require(`./api/rsn.api.${config.apiV}.tokens`)(app, log, MARIA);
 }
 
 app.use(function(req,res,next){
@@ -93,7 +93,7 @@ app.use(function(req,res,next){
 app.use(express.static(path.join(__dirname, '../dist')));
 
 require('./router/main.router')(app, config, request, log);
-require(`./api/eos.api.${config.apiV}`)(app, config, request, log, mongoMain);
+require(`./api/rsn.api.${config.apiV}`)(app, config, request, log, mongoMain);
 
 /*app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));

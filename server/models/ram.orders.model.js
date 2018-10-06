@@ -1,5 +1,5 @@
 /*
-   Created by eoswebnetbp1
+   Created by jared
 */
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -9,11 +9,11 @@ var TABLE_NAME = 'RAM_ORDERS';
 var MODEL;
 
 var API = new mongoose.Schema({
-  account: { 
+  account: {
     type: String,
     index: true
   },
-  amount: { 
+  amount: {
     type: String
   },
   type: {
@@ -43,6 +43,3 @@ module.exports = function (connection) {
   }
   return MODEL;
 };
-
-
-

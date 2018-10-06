@@ -1,11 +1,11 @@
-// TPS damon by eoswebnetbp1
+// TPS damon by jared
 const async			= require('async');
 const mongoose      = require("mongoose");
 const config      	= require('../../config');
 
-const EOS     		= require('eosjs');
-config.eosConfig.httpEndpoint = config.CRON_API;
-const eos     		= EOS(config.eosConfig);
+const RSN     		= require('arisenjs');
+config.rsnConfig.httpEndpoint = config.CRON_API;
+const rsn     		= RSN(config.rsnConfig);
 
 const log4js      = require('log4js');
 log4js.configure(config.logger);
@@ -14,7 +14,7 @@ const log         = log4js.getLogger('tps');
 const customSlack = require('../modules/slack.module');
 const logSlack    = customSlack.configure(config.loggerSlack.alerts);
 
-const customApi	  = require('../api/eos.api.v1.custom');
+const customApi	  = require('../api/rsn.api.v1.custom');
 
 mongoose.Promise  = global.Promise;
 const mongoMain   = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTIONS,
@@ -23,7 +23,7 @@ const mongoMain   = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPT
       log.error(err);
       process.exit(1);
     }
-    log.info('[Connected to Mongo EOS in TPS daemon] : 27017');
+    log.info('[Connected to Mongo RSN in TPS daemon] : 27017');
 });
 
 const SETTINGS = require('../models/api.stats.model')(mongoMain);
@@ -59,8 +59,8 @@ function getMaxTps(){
 			});
 		},
 		(stat, cb) => {
-			eos.getInfo({})
-			   	.then(result => { 
+			rsn.getInfo({})
+			   	.then(result => {
 			   		if (!result.last_irreversible_block_num){
 			   			return cb('Cant get info from blockchain getStatAggregation!');
 			   		}
@@ -93,7 +93,7 @@ function getBlockRecursive(stat, result, elements, cb){
 			   cb(null, stat);
 		 });
 	} else {
-		eos.getBlock({ block_num_or_id: elements[0] })
+		rsn.getBlock({ block_num_or_id: elements[0] })
 		    .then(block => {
 			  	if (block.transactions && block.transactions.length){
 	   				maxPerSec += block.transactions.length;
@@ -106,7 +106,7 @@ function getBlockRecursive(stat, result, elements, cb){
 					counter = 0;
 				} else {
 					counter += 1;
-				}			   			
+				}
 			  	stat.cursor_max_tps = block.block_num;
 			  	elements.shift();
 			  	getBlockRecursive(stat, result, elements, cb);
@@ -120,4 +120,3 @@ function getBlockRecursive(stat, result, elements, cb){
 
 
 getMaxTps();
-

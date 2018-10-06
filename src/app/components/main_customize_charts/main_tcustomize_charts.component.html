@@ -1,26 +1,26 @@
-<div class="main-chart-cust-container"> 
+<div class="main-chart-cust-container">
 <div class="container">
 <div class="row main-custom-chart-container">
-    
+
     <div class="col-sm-4 chart-child-container customize-containers-not-active customize-containers-active grid-cs-5-inline">
       <div class="col-xs-8 no-padding first-container-widget">
-       <div class="color-grey-text">eos - usd</div> 
+       <div class="color-grey-text">rsn - usd</div>
        <div class="chart-child-container-dollar">
-          <div class="pull-left"><i class="fas fa-dollar-sign"></i> {{ currencyObj?.RAW?.EOS?.USD?.PRICE }}</div>
-          <div class="pull-right chart-child-container-change first-container-change"> 
-            <div class="color-green" [ngClass]="{'color-red': currencyObj?.RAW?.EOS?.USD?.CHANGEDAY < 0}">
-              <i class="material-icons">{{ (currencyObj?.RAW?.EOS?.USD?.CHANGEDAY < 0) ? 'arrow_drop_down' : 'keyboard_arrow_up' }}</i>
-              {{ (currencyObj?.RAW?.EOS?.USD?.CHANGEDAY?.toFixed(2)).replace('-', '') }} <i class="fas fa-percent"></i>
+          <div class="pull-left"><i class="fas fa-dollar-sign"></i> {{ currencyObj?.RAW?.RSN?.USD?.PRICE }}</div>
+          <div class="pull-right chart-child-container-change first-container-change">
+            <div class="color-green" [ngClass]="{'color-red': currencyObj?.RAW?.RSN?.USD?.CHANGEDAY < 0}">
+              <i class="material-icons">{{ (currencyObj?.RAW?.RSN?.USD?.CHANGEDAY < 0) ? 'arrow_drop_down' : 'keyboard_arrow_up' }}</i>
+              {{ (currencyObj?.RAW?.RSN?.USD?.CHANGEDAY?.toFixed(2)).replace('-', '') }} <i class="fas fa-percent"></i>
             </div>
           </div>
-       </div>        
+       </div>
       </div>
       <div class="col-xs-4 no-padding widget-chart-container">
-          <div class="currency-page-main-chart"> 
+          <div class="currency-page-main-chart">
             <ngx-charts-line-chart *ngIf="mainCurrencyChartDataRes"
               [view]="ngxChartOptions.view"
               [scheme]="ngxChartOptions.colorScheme"
-              [results]="[{ name: 'EOS_USD', series: mainCurrencyChartDataRes || [{name: '0', value: 1}] }]"
+              [results]="[{ name: 'RSN_USD', series: mainCurrencyChartDataRes || [{name: '0', value: 1}] }]"
               [gradient]="ngxChartOptions.gradient"
               [xAxis]="ngxChartOptions.showXAxis"
               [yAxis]="ngxChartOptions.showYAxis"
@@ -31,24 +31,24 @@
               [yAxisLabel]="ngxChartOptions.yAxisLabel"
               [autoScale]="ngxChartOptions.autoScale"
               [curve]="curve">
-            </ngx-charts-line-chart> 
-          </div>        
-      </div> 
-    </div>
-    
-    <div class="col-sm-2 draggble chart-child-container customize-containers-not-active grid-cs-5-inline">
-       <div class="color-grey-text">Ram price </div> 
-       <div class="chart-child-container-dollar">
-          <div class="pull-left color-green"> {{ ramPrice }} </div>
-           <small style="margin-left: 5px"> EOS/kb </small>
-       </div> 
+            </ngx-charts-line-chart>
+          </div>
+      </div>
     </div>
 
     <div class="col-sm-2 draggble chart-child-container customize-containers-not-active grid-cs-5-inline">
-       <div class="color-grey-text">Accounts</div> 
+       <div class="color-grey-text">Ram price </div>
+       <div class="chart-child-container-dollar">
+          <div class="pull-left color-green"> {{ ramPrice }} </div>
+           <small style="margin-left: 5px"> RSN/kb </small>
+       </div>
+    </div>
+
+    <div class="col-sm-2 draggble chart-child-container customize-containers-not-active grid-cs-5-inline">
+       <div class="color-grey-text">Accounts</div>
        <div class="chart-child-container-dollar">
           <div class="pull-left color-green"> {{ aggragationData?.accounts?.toLocaleString() }}</div>
-       </div> 
+       </div>
     </div>
 
     <div class="col-sm-2 draggble chart-child-container customize-containers-not-active grid-cs-5-inline">
@@ -62,14 +62,14 @@
        <div class="color-grey-text">Transactions</div>
        <div class="chart-child-container-dollar">
           <div class="pull-left color-green"> {{ aggragationData?.transactions?.toLocaleString() }}</div>
-       </div> 
-    </div>  
-    
+       </div>
+    </div>
+
     <div class="col-sm-2 draggble chart-child-container customize-containers-not-active grid-cs-5-inline">
-       <div class="color-grey-text">Actions</div> 
+       <div class="color-grey-text">Actions</div>
        <div class="chart-child-container-dollar">
           <div class="pull-left color-green"> {{ aggragationData?.actions?.toLocaleString() }} </div>
-       </div> 
+       </div>
     </div>
 
     <div class="col-sm-12">
@@ -82,13 +82,13 @@
            <div class="color-grey-text pull-left tps-text"><small>users online:</small></div>
            <div class="pull-left color-green"> {{ usersOnline }}</div>
       </div>
-      <h3 class="producer-candidate pull-right"><small>vote for us: </small> 
-          <strong><a routerLink="/vote" class="color-green">eoswebnetbp1</a></strong>
+      <h3 class="producer-candidate pull-right"><small>vote for us: </small>
+          <strong><a routerLink="/vote" class="color-green">rsnwebnetbp1</a></strong>
       </h3>
     </div>
 
     <!--<div class="col-sm-2 chart-child-container customize-container grid-cs-5-inline">
-      <a class="customize-button text-center"> 
+      <a class="customize-button text-center">
         <div class="custom-widget-title"><span class="customize">Customize</span> widgets <i class="far fa-question-circle"></i></div>
         <div class="learn-more">Learn more <i class="fas fa-chevron-right"></i></div>
       </a>
@@ -96,5 +96,3 @@
 </div>
 </div>
 </div>
-
-

@@ -1,9 +1,9 @@
 {
-	"producer_account_name": "eoswebnetbp1",
-	"producer_public_key": "EOS5sT6mdCkTBLZM8vZnwqmBpA6gjtbdSTEeGL2k26JQFnjaCg6j2",
+	"producer_account_name": "arisen",
+	"producer_public_key": "RSN63qxMoqYwywQKXfX182Zb7UKsaYYcDfs41pN9Mf62mgUBmMfPc",
 	"org": {
-	"candidate_name": "EOSweb",
-	"website": "https://eosweb.net/",
+	"candidate_name": "arisen",
+	"website": "https://arisenexplorer.com",
 	"code_of_conduct": "",
 	"email": "",
 	"branding": {
@@ -12,33 +12,33 @@
 	"logo_svg": ""
 },
 	"location": {
-	"name": "Kiev",
-	"country": "UA",
+	"name": "Arisen",
+	"country": "US",
 	"latitude": 50.431782,
 	"longitude": 30.516382
 },
 	"social": {
-		"steemit": "@eosweb.net",
-		"twitter": "EoswebN",
+		"steemit": "@arisen",
+		"twitter": "arisenio",
 		"youtube": "",
-		"facebook": "EOSwebnet-199076424068961",
-		"github": "orange1337",
-		"reddit": "eosweb",
+		"facebook": "arisenio",
+		"github": "arisenio",
+		"reddit": "arisenio",
 		"keybase": "",
-		"telegram": "eosweb",
+		"telegram": "arisenio",
 		"wechat": ""
 	}
 },
 "nodes": [{
 		"location": {
-			"name": "EOSweb",
-			"country": "Finland",
+			"name": "Arisen Explorer",
+			"country": "United States of America",
 			"latitude": 60.1708,
 			"longitude": 24.9375
 		},
 		"is_producer": true,
-		"p2p_endpoint": "node.eosweb.net",
-		"api_endpoint": "http://apinode.eosweb.net",
-		"ssl_endpoint": "https://apinode.eosweb.net"
+		"p2p_endpoint": "greatchain.arisennodes.io",
+		"api_endpoint": "http://api.arisenexplorer.com",
+		"ssl_endpoint": "https://api.arisenexplorer.com"
 	}]
 }

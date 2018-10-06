@@ -17,7 +17,7 @@ export class RamPageComponent implements OnInit{
   spinner = false;
   displayedColumns = ['Tx', 'Type', 'Price', 'Amount', 'Date'];
   dataSource;
-  eosToInt = Math.pow(10, 13);
+  rsnToInt = Math.pow(10, 13);
   ramPrice;
   globalStat;
   curve = shape.curveMonotoneX;
@@ -33,22 +33,22 @@ export class RamPageComponent implements OnInit{
       gradient : true,
       showLegend : false,
       showXAxisLabel : false,
-      xAxisLabel : 'EOS',
+      xAxisLabel : 'RSN',
       showYAxisLabel : true,
-      yAxisLabel : 'EOS',
+      yAxisLabel : 'RSN',
       autoScale : true,
       timeline: true,
       fitContainer : true
-  }; 
+  };
   mainCurrencyChartDataRes;
   WINDOW: any = window;
-  eosNetwork = {
-            blockchain: 'eos',
+  rsnNetwork = {
+            blockchain: 'rsn',
             host: '',
             port: '',
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
   };
-  eosOptions = {
+  rsnOptions = {
             broadcast: true,
             sign: true,
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
@@ -58,11 +58,11 @@ export class RamPageComponent implements OnInit{
   balance;
   unstaked;
   buyRAM = {
-    eos: 0,
+    rsn: 0,
     kb : 0
   };
   sellRAM = {
-    eos: 0,
+    rsn: 0,
     kb : 0
   };
   donation;
@@ -71,13 +71,13 @@ export class RamPageComponent implements OnInit{
   timeArray = ['Week', 'Month'];
   dateFrom = new Date(+new Date() - 24 * 60 * 60 * 1000);
 
-  constructor(private route: ActivatedRoute, 
-              protected http: HttpClient, 
+  constructor(private route: ActivatedRoute,
+              protected http: HttpClient,
               private socket: Socket,
               private notifications: NotificationsService){}
 
   getGlobal(){
-      this.http.get(`/api/v1/get_table_rows/eosio/eosio/global/10`)
+      this.http.get(`/api/v1/get_table_rows/arisen/arisen/global/10`)
           .subscribe((res: any) => {
                           if (!res || !res.rows){
                               return console.error('data error', res);
@@ -92,8 +92,8 @@ export class RamPageComponent implements OnInit{
   getWalletAPI(){
        this.http.get(`/api/v1/get_wallet_api`)
           .subscribe((res: any) => {
-                          this.eosNetwork.host = res.host;
-                          this.eosNetwork.port = res.port;
+                          this.rsnNetwork.host = res.host;
+                          this.rsnNetwork.port = res.port;
                           this.protocol = res.protocol;
                       },
                       (error) => {
@@ -140,7 +140,7 @@ export class RamPageComponent implements OnInit{
   }
 
   getRam(){
-      this.http.get(`/api/v1/get_table_rows/eosio/eosio/rammarket/10`)
+      this.http.get(`/api/v1/get_table_rows/arisen/arisen/rammarket/10`)
           .subscribe((res: any) => {
                           this.countRamPrice(res);
                       },
@@ -174,9 +174,9 @@ export class RamPageComponent implements OnInit{
   }
 
   getBalance(accountId){
-      this.http.get(`/api/v1/get_currency_balance/eosio.token/${accountId}/EOS`)
+      this.http.get(`/api/v1/get_currency_balance/arisen.token/${accountId}/RSN`)
            .subscribe((res: any) => {
-                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]); 
+                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]);
                           let staked = 0;
                           if (this.mainData.voter_info && this.mainData.voter_info.staked){
                               staked = this.mainData.voter_info.staked;
@@ -188,26 +188,26 @@ export class RamPageComponent implements OnInit{
                       });
   }
 
-  buyChangeEOS(e) {
-      this.buyRAM.kb = this.buyRAM.eos / this.ramPrice;
+  buyChangeRSN(e) {
+      this.buyRAM.kb = this.buyRAM.rsn / this.ramPrice;
   }
   buyChangeKB(e) {
-      this.buyRAM.eos = this.ramPrice * this.buyRAM.kb;
+      this.buyRAM.rsn = this.ramPrice * this.buyRAM.kb;
   }
-  sellChangeEOS(e) {
-      this.sellRAM.kb = this.sellRAM.eos / this.ramPrice;
+  sellChangeRSN(e) {
+      this.sellRAM.kb = this.sellRAM.rsn / this.ramPrice;
   }
   sellChangeKB(e) {
-      this.sellRAM.eos = this.ramPrice * this.sellRAM.kb;
+      this.sellRAM.rsn = this.ramPrice * this.sellRAM.kb;
   }
 
-  loginScatter(){
-    if (!this.WINDOW.scatter){
-        return this.notifications.error('Scatter error', 'Please install Scatter extension');
+  loginArkId(){
+    if (!this.WINDOW.arkid){
+        return this.notifications.error('ArkId error', 'Please install ArkId extension');
     }
-    localStorage.setItem("scatter", 'loggedIn');
-    this.WINDOW.scatter.getIdentity({
-       accounts: [this.eosNetwork]
+    localStorage.setItem("arkid", 'loggedIn');
+    this.WINDOW.arkid.getIdentity({
+       accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
         if (identity && identity.accounts[0] && identity.accounts[0].name){
@@ -219,12 +219,12 @@ export class RamPageComponent implements OnInit{
     });
   }
 
-  logoutScatter(){
-    if (!this.WINDOW.scatter){
-        return this.notifications.error('Scatter error', 'Please install Scatter extension');
+  logoutArkId(){
+    if (!this.WINDOW.arkid){
+        return this.notifications.error('ArkId error', 'Please install ArkId extension');
     }
-    localStorage.setItem("scatter", 'loggedOut');
-    this.WINDOW.scatter.forgetIdentity().then(() => {
+    localStorage.setItem("arkid", 'loggedOut');
+    this.WINDOW.arkid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -241,22 +241,22 @@ export class RamPageComponent implements OnInit{
     }
         let amount = parseFloat(`${quantity}`).toFixed(4);
         let requiredFields = {
-            accounts: [this.eosNetwork]
+            accounts: [this.rsnNetwork]
         }
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, this.protocol);
-        eos.contract('eosio', {
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        rsn.contract('arisen', {
             requiredFields
         }).then(contract => {
             contract.buyram({
                 payer: this.identity.accounts[0].name,
                 receiver: this.identity.accounts[0].name,
-                quant: `${amount} EOS`
+                quant: `${amount} RSN`
             }).then(trx => {
                  console.log(trx);
                  this.saveOrder({ amount: this.buyRAM.kb * 1024, account: this.identity.accounts[0].name, type: 'buy', tx_id: trx.transaction_id, price: this.ramPrice });
                  this.getAccount(this.identity.accounts[0].name);
                  this.buyRAM = {
-                     eos: 0,
+                     rsn: 0,
                      kb: 0
                  };
                  this.notifications.success('Transaction Success', '');
@@ -264,7 +264,7 @@ export class RamPageComponent implements OnInit{
             }).catch(err => {
                  console.error(err);
                  this.notifications.error('Transaction Fail', '');
-            });  
+            });
         }).catch(err => {
             console.error(err);
             this.notifications.error('Transaction Fail', '');
@@ -279,12 +279,12 @@ export class RamPageComponent implements OnInit{
         if (isNaN(amount)){
           return console.error('Amount must be a number!');
         }
-        amount = parseInt(`${amount * 1024}`); 
+        amount = parseInt(`${amount * 1024}`);
         let requiredFields = {
-            accounts: [this.eosNetwork]
+            accounts: [this.rsnNetwork]
         }
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, this.protocol);
-        eos.contract('eosio', {
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        rsn.contract('arisen', {
             requiredFields
         }).then(contract => {
             contract.sellram({
@@ -295,7 +295,7 @@ export class RamPageComponent implements OnInit{
                  this.saveOrder({ amount: amount, account: this.identity.accounts[0].name, type: 'sell', tx_id: trx.transaction_id, price: this.ramPrice });
                  this.getAccount(this.identity.accounts[0].name);
                  this.sellRAM = {
-                     eos: 0,
+                     rsn: 0,
                      kb: 0
                  };
                  this.notifications.success('Transaction Success', '');
@@ -303,7 +303,7 @@ export class RamPageComponent implements OnInit{
             }).catch(err => {
                  console.error(err);
                  this.notifications.error('Transaction Fail', '');
-            });  
+            });
         });
   }
 
@@ -312,8 +312,8 @@ export class RamPageComponent implements OnInit{
         return console.error('Identity error!!!');
     }
         let amount = Number(`${this.donation}`).toFixed(4);
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, "https");
-        eos.transfer(this.identity.accounts[0].name, 'eoswebnetbp1', `${amount} EOS`, 'Donation')
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, "https");
+        rsn.transfer(this.identity.accounts[0].name, 'rsnwebnetbp1', `${amount} RSN`, 'Donation')
            .then(result => {
                 console.log(result);
                 this.getAccount(this.identity.accounts[0].name);
@@ -323,7 +323,7 @@ export class RamPageComponent implements OnInit{
            }).catch(err => {
                 console.error(err);
                 this.notifications.error('Transaction Fail', '');
-           });  
+           });
   }
 
 
@@ -336,7 +336,7 @@ export class RamPageComponent implements OnInit{
             (err: any) => {
                   console.error(err);
             });
-  }  
+  }
 
 
   getOrderHistory(account){
@@ -358,20 +358,20 @@ export class RamPageComponent implements OnInit{
       return parseFloat(number).toFixed(4);
   }
 
-  
+
   ngOnInit() {
      this.getGlobal();
      this.getRam();
      this.getChart(this.dateFrom);
      this.getWalletAPI();
 
-     if (localStorage.getItem("scatter") === 'loggedIn'){
-           if (!this.WINDOW.scatter){
-                document.addEventListener('scatterLoaded', () => {
-                      this.loginScatter();
+     if (localStorage.getItem("arkid") === 'loggedIn'){
+           if (!this.WINDOW.arkid){
+                document.addEventListener('arkidLoaded', () => {
+                      this.loginArkId();
                 });
            } else {
-             this.loginScatter();
+             this.loginArkId();
            }
      }
 
@@ -380,10 +380,3 @@ export class RamPageComponent implements OnInit{
      });
   }
 }
-
-
-
-
-
-
-

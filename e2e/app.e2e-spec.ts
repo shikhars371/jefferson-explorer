@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('eosweb App', () => {
+describe('ArisenExplorer App', () => {
   let page: AppPage;
 
   beforeEach(() => {

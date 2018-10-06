@@ -1,5 +1,5 @@
 /*
-   Created by eoswebnetbp1
+   Created by jared
 */
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -9,11 +9,11 @@ var TABLE_NAME = 'TELEGRAM_RAM';
 var MODEL;
 
 var API = new mongoose.Schema({
-  chatId: { 
+  chatId: {
     type: String,
     index: true
   },
-  active: { 
+  active: {
     type: Boolean,
     index: true,
     default: true
@@ -27,7 +27,7 @@ var API = new mongoose.Schema({
     type: Number,
     index: true,
     default: 0
-  },  
+  },
   stopLoss: {
     type: Number,
     index: true,
@@ -54,6 +54,3 @@ module.exports = function (connection) {
   }
   return MODEL;
 };
-
-
-

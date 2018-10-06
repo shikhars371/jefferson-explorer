@@ -17,12 +17,12 @@ export class ProducersPageComponent implements OnInit{
   spinner = false;
   displayedColumns = ['#', 'Name', 'Status', 'Url', 'Location', 'Total Votes', 'Rate', 'Rewards'];
   dataSource;
-  eosToInt = Math.pow(10, 13);
+  rsnToInt = Math.pow(10, 13);
   totalProducerVoteWeight;
   sortedArray;
   votesToRemove;
   timeToUpdate = 6000;
-  
+
   firstLoad = true;
   globalTableData;
   producer;
@@ -33,8 +33,8 @@ export class ProducersPageComponent implements OnInit{
 
   getBlockData(){
       this.spinner   = (this.firstLoad) ? true : false;
-  		let producers  = this.http.get(`/api/custom/get_table_rows/eosio/eosio/producers/500`);
-      let global     = this.http.get(`/api/v1/get_table_rows/eosio/eosio/global/1`);
+  		let producers  = this.http.get(`/api/custom/get_table_rows/arisen/arisen/producers/500`);
+      let global     = this.http.get(`/api/v1/get_table_rows/arisen/arisen/global/1`);
       let bpInfo     = this.http.get(`/api/v1/get_producers_bp_json`);
 
       forkJoin([producers, global, bpInfo])
@@ -61,7 +61,7 @@ export class ProducersPageComponent implements OnInit{
       let joinObj = {};
       if (!joinArr){
           return sortedArr;
-      }  
+      }
       joinArr.forEach(elem => {
            joinObj[elem.name] = {
               location: (elem.location.length === 2) ? elem.location : "",
@@ -70,8 +70,8 @@ export class ProducersPageComponent implements OnInit{
       });
       sortedArr.forEach(elem => {
             if(joinObj[elem.owner]){
-               elem.location = joinObj[elem.owner].location.toLowerCase(); 
-               elem.image = joinObj[elem.owner].image; 
+               elem.location = joinObj[elem.owner].location.toLowerCase();
+               elem.image = joinObj[elem.owner].image;
             }
       });
       return sortedArr;
@@ -85,7 +85,7 @@ export class ProducersPageComponent implements OnInit{
   ngOnInit() {
      this.getBlockData();
      this.firstLoad = false;
-     
+
      this.socket.on('get_tps_blocks', (data) => {
        if (!data[1]){
            return;
@@ -97,10 +97,3 @@ export class ProducersPageComponent implements OnInit{
      });
   }
 }
-
-
-
-
-
-
-

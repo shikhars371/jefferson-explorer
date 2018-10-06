@@ -7,15 +7,15 @@ RUN apt-get update \
     && ln -s /usr/bin/nodejs /usr/bin/node
 
 # Adding sources
-WORKDIR /home/eosweb
-COPY . /home/eosweb
+WORKDIR /home/arisen-blockchain-explorer
+COPY . /home/arisen-blockchain-explorer
 
-RUN cd /home/eosweb && npm install -g @angular/cli@1.7.1
-RUN cd /home/eosweb && npm install
-RUN cd /home/eosweb && ng build --prod
-RUN cd /home/eosweb && mkdir server/logs
+RUN cd /home/arisen-blockchain-explorer && npm install -g @angular/cli@1.7.1
+RUN cd /home/arisen-blockchain-explorer && npm install
+RUN cd /home/arisen-blockchain-explorer && ng build --prod
+RUN cd /home/arisen-blockchain-explorer && mkdir server/logs
 
-CMD [ "node", "/home/eosweb/server/server.js" ]
+CMD [ "node", "/home/arisen-blockchain-explorer/server/server.js" ]
 
 EXPOSE 3039
 EXPOSE 3001

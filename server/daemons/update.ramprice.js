@@ -2,8 +2,8 @@ const async			= require('async');
 const mongoose      = require("mongoose");
 const config      	= require('../../config');
 
-const EOS     		= require('eosjs');
-const eos     		= EOS(config.eosConfig);
+const RSN     		= require('arisenjs');
+const rsn     		= RSN(config.rsnConfig);
 
 mongoose.Promise = global.Promise;
 const mongoMain  = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTIONS,
@@ -12,7 +12,7 @@ const mongoMain  = mongoose.createConnection(config.MONGO_URI, config.MONGO_OPTI
       console.error(err);
       process.exit(1);
     }
-    console.log('[Connected to Mongo EOS in accounts daemon] : 27017');
+    console.log('[Connected to Mongo RSN in accounts daemon] : 27017');
 });
 
 const RAM 			= require('../models/ram.price.model')(mongoMain);
@@ -50,7 +50,7 @@ function getAccountAggregation (){
 						console.log(order._id, price);
 						cb();
 					});
-					
+
 				});
 			}, (err) => {
 				if(err){
@@ -73,7 +73,3 @@ function getAccountAggregation (){
 
 
 getAccountAggregation();
-
-
-
-

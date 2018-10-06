@@ -1,5 +1,5 @@
 /*
-   Created by eoswebnetbp1
+   Created by jared
 */
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -9,25 +9,25 @@ var TABLE_NAME = 'Stats';
 var MODEL;
 
 var API = new mongoose.Schema({
-  transactions: { 
+  transactions: {
     type: Number,
-    default: 0 
+    default: 0
   },
-  actions: { 
+  actions: {
     type: Number,
-    default: 0 
+    default: 0
   },
-  accounts: { 
+  accounts: {
     type: Number,
-    default: 0 
+    default: 0
   },
-  cursor_block: { 
+  cursor_block: {
     type: Number,
-    default: 0 
+    default: 0
   },
   cursor_accounts: {
     type: Number,
-    default: 0 
+    default: 0
   },
   max_tps: {
     type: Number,
@@ -41,7 +41,7 @@ var API = new mongoose.Schema({
     type: Number,
     default: 14487862
   },
-  last_update: { 
+  last_update: {
     type: Date
   }
 });
@@ -56,6 +56,3 @@ module.exports = function (connection) {
   }
   return MODEL;
 };
-
-
-

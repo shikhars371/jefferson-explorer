@@ -1,5 +1,5 @@
 /*
-  App configuration example created by eoswebnetbp1 (31.08.18)
+  App configuration example created by jared (31.08.18)
 */
 const path = require('path');
 let config = {};
@@ -8,7 +8,7 @@ let config = {};
 config.PROD = false;
 
 // mongo uri and options
-config.MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/EOSweb';
+config.MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/ArisenExplorer';
 config.MONGO_OPTIONS = {
     socketTimeoutMS: 30000,
     keepAlive: true,
@@ -22,20 +22,20 @@ config.MARIA_DB = {
     host: '',
     user: '',
     password: '',
-    db: '' 
+    db: ''
 };
 
 // cron processes (aggregation of main stat - actions, transactions, accounts, analytics)
 config.CRON = false;
-config.CRON_API = 'http://bp.cryptolions.io';
+config.CRON_API = 'https://greatchain.arisennodes.io';
 
 config.TPS_ENABLE = true;
 config.MAX_TPS_TIME_UPDATE = 5000;
 
-config.eosInfoConfigs = {
+config.rsnInfoConfigs = {
       mainNet: {
         chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        httpEndpoint: "http://bp.cryptolions.io",
+        httpEndpoint: "https://greatchain.arisennodes.io",
         name: "Main Net",
         key: "mainNet"
       },
@@ -49,11 +49,11 @@ config.telegram = {
 };
 
 // reserve nodes
-config.endpoints = ['https://eos.greymass.com', 'http://bp.cryptolions.io', 'http://eosbp-0.atticlab.net'];
+config.endpoints = ['https://greatchain.arisennodes.io'];
 
-// eosjs
-config.eosConfig = {
-  chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
+// rsnjs
+config.rsnConfig = {
+  chainId: "fffa80dc4492fedaa90cbc4ee6f5520568826dfb31ed9c8c161224349f6b82f5",
   keyProvider: "",
   httpEndpoint: config.endpoints[0],
   expireInSeconds: 60,
@@ -68,24 +68,24 @@ config.eosConfig = {
 
 // scatter wallet
 config.walletAPI = {
-        host: 'nodes.get-scatter.com',
+        host: 'wallet.arisennodes.com',
         port: '',
         protocol: 'https'
 };
 
 // api url for producers list
-config.customChain = 'https://nodes.get-scatter.com';
+config.customChain = 'https://producers.arisennodes.com';
 
 // api url for history
-config.historyChain = 'https://eos.greymass.com';
+config.historyChain = 'https://history.arisennodes.com';
 
 config.apiV = 'v1'; // api version
 config.RAM_UPDATE = 5 * 60 * 1000; // time for ram update - /api/api.*.socket
-config.HISTORY_UPDATE = 5 * 60 * 1000; // time for stats update - /api/api.*.socket 
+config.HISTORY_UPDATE = 5 * 60 * 1000; // time for stats update - /api/api.*.socket
 config.MAX_BUFFER = 500000; // max buffer size for child processes (kb) - /crons
 config.blockUpdateTime = 900; // mainpage upades frequency  - /api/api.*.socket in ml sec
 config.offsetElementsOnMainpage = 10; // blocks on mainpage
-config.limitAsync = 30; // max threads for async.js module  
+config.limitAsync = 30; // max threads for async.js module
 config.updateTPS = 1000;
 
 // log4js
@@ -101,7 +101,7 @@ config.logger = {
       socket_io: {
         type: 'file',
         filename: path.join(__dirname, './server/logs/socket_io.log'),
-      },      
+      },
       accounts_daemon: {
         type: 'file',
         filename: path.join(__dirname, './server/logs/accounts_daemon.log'),
@@ -162,4 +162,3 @@ config.loggerSlack = {
 };
 
 module.exports = config;
-

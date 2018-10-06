@@ -3,13 +3,13 @@ import { Injectable, EventEmitter, Inject } from '@angular/core';
 @Injectable()
 export class MainService {
 
-  //eosRateReady: EventEmitter<any> = new EventEmitter();
-  eosRateReady = {};
+  //rsnRateReady: EventEmitter<any> = new EventEmitter();
+  rsnRateReady = {};
   votesToRemove;
 
   WINDOW: any = window;
 
-  eosConfig = {
+  rsnConfig = {
     chainId: "",
     httpEndpoint: "",
     expireInSeconds: 60,
@@ -24,11 +24,11 @@ export class MainService {
 
   constructor() {}
 
-  setEosPrice(data){
-      this.eosRateReady = data;
+  setRsnPrice(data){
+      this.rsnRateReady = data;
   }
-  getEosPrice(){
-      return this.eosRateReady;
+  getRsnPrice(){
+      return this.rsnRateReady;
   }
 
   sortArray(data) {
@@ -38,9 +38,9 @@ export class MainService {
       let result = data.sort((a, b) => {
           return b.total_votes - a.total_votes;
       }).map((elem, index) => {
-          let eos_votes = Math.floor(this.calculateEosFromVotes(elem.total_votes));
+          let rsn_votes = Math.floor(this.calculateRsnFromVotes(elem.total_votes));
           elem.all_votes = elem.total_votes;
-          elem.total_votes = Number(eos_votes).toLocaleString();
+          elem.total_votes = Number(rsn_votes).toLocaleString();
           elem.index = index + 1;
           return elem;
       });
@@ -62,7 +62,7 @@ export class MainService {
         elem.rate    = (elem.all_votes / totalProducerVoteWeight * 100).toLocaleString();
         elem.rewards = this.countRewards(elem.all_votes, elem.index, totalProducerVoteWeight);
       });
-      
+
       return data;
   }
 
@@ -70,7 +70,7 @@ export class MainService {
     let position = index;
     let reward = 0;
     let percentageVotesRewarded = total_votes / (totalProducerVoteWeight - this.votesToRemove) * 100;
-     
+
      if (position < 22) {
        reward += 318;
      }
@@ -81,24 +81,24 @@ export class MainService {
      return Math.floor(reward).toLocaleString();
   }
 
-  calculateEosFromVotes(votes){
+  calculateRsnFromVotes(votes){
       let date = +new Date() / 1000 - 946684800;
       let weight = parseInt(`${ date / (86400 * 7) }`, 10) / 52; // 86400 = seconds per day 24*3600
       return votes / (2 ** weight) / 10000;
   };
- 
+
 
   getGlobalNetConfig(){
     if (!this.getCookie("netsConf")){
-      this.eosConfig.chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
-      this.eosConfig.httpEndpoint = "http://bp.cryptolions.io";
-      return this.WINDOW.Eos(this.eosConfig);
+      this.rsnConfig.chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
+      this.rsnConfig.httpEndpoint = "http://greatchain.arisennodes.io";
+      return this.WINDOW.Rsn(this.rsnConfig);
     }
       let cookie = JSON.parse(this.getCookie("netsConf"));
       let net = localStorage.getItem("netName") || "mainNet";
-      this.eosConfig.chainId = cookie[net].chainId;
-      this.eosConfig.httpEndpoint = cookie[net].httpEndpoint;
-      return this.WINDOW.Eos(this.eosConfig);
+      this.rsnConfig.chainId = cookie[net].chainId;
+      this.rsnConfig.httpEndpoint = cookie[net].httpEndpoint;
+      return this.WINDOW.Rsn(this.rsnConfig);
   }
 
   getCookie(name) {

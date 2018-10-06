@@ -17,7 +17,7 @@ export class AnalyticsPageComponent implements OnInit{
   spinner = false;
   displayedColumns = ['#', 'Name', 'Balance', 'Staked', 'Unstaked'];
   dataSource;
-  eosToInt = Math.pow(10, 13);
+  rsnToInt = Math.pow(10, 13);
   allvotes;
   globalStat;
   curve = shape.curveMonotoneX;
@@ -36,7 +36,7 @@ export class AnalyticsPageComponent implements OnInit{
       autoScale : true,
       timeline: true,
       fitContainer : true
-  }; 
+  };
 
   trx;
   actions;
@@ -52,7 +52,7 @@ export class AnalyticsPageComponent implements OnInit{
                       (res: any) => {
                           this.mainData = res;
                           this.pieChart = this.createPieChart(this.mainData);
-                          
+
                           let ELEMENT_DATA: Element[] = this.mainData;
                           this.dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
 
@@ -65,7 +65,7 @@ export class AnalyticsPageComponent implements OnInit{
   };
 
   getGlobal(){
-      this.http.get(`/api/v1/get_table_rows/eosio/eosio/global/10`)
+      this.http.get(`/api/v1/get_table_rows/arisen/arisen/global/10`)
           .subscribe((res: any) => {
                           if (!res || !res.rows){
                               return console.error('data error', res);
@@ -95,7 +95,7 @@ export class AnalyticsPageComponent implements OnInit{
      this.trx = [];
      this.actions = [];
      data.forEach(elem => {
-           this.trx.push({name: new Date(`${elem._id.year}/${elem._id.month}/${elem._id.dayOfMonth}`), 
+           this.trx.push({name: new Date(`${elem._id.year}/${elem._id.month}/${elem._id.dayOfMonth}`),
                           value: elem.transactions[elem.transactions.length - 1] - elem.transactions[0]  });
            this.actions.push({name: new Date(`${elem._id.year}/${elem._id.month}/${elem._id.dayOfMonth}`),
                               value: elem.actions[elem.actions.length - 1] - elem.actions[0] });
@@ -109,7 +109,7 @@ export class AnalyticsPageComponent implements OnInit{
             return;
         }
         let result = data.map(elem => {
-             return { name: elem.account_name, value: Math.floor(elem.balance_eos) }; 
+             return { name: elem.account_name, value: Math.floor(elem.balance_rsn) };
         });
         result.shift();
         return result;
@@ -121,10 +121,3 @@ export class AnalyticsPageComponent implements OnInit{
      this.getChart();
   }
 }
-
-
-
-
-
-
-

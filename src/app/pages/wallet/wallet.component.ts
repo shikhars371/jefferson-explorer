@@ -26,16 +26,16 @@ export class WalletPageComponent implements OnInit {
   unstaked = 0;
   staked = 0;
   balance = 0;
-  
+
   identity;
   WINDOW: any = window;
-  eosNetwork = {
-            blockchain: 'eos',
+  rsnNetwork = {
+            blockchain: 'rsn',
             host: '',
             port: '',
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
   };
-  eosOptions = {
+  rsnOptions = {
             broadcast: true,
             sign: true,
             chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
@@ -46,16 +46,16 @@ export class WalletPageComponent implements OnInit {
       to: '',
       amount: '',
       memo: '',
-      symbol: 'EOS'
+      symbol: 'RSN'
   };
   contract;
-  contractName = 'eosio';
+  contractName = 'arisen';
   contractKeys = {};
   contractMethod = '';
   contractField = {};
   contractFieldsRender = [];
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
               protected http: HttpClient,
               public dialog: MatDialog,
               private notifications: NotificationsService){}
@@ -75,9 +75,9 @@ export class WalletPageComponent implements OnInit {
   }
 
   getBalance(accountId){
-      this.http.get(`/api/v1/get_currency_balance/eosio.token/${accountId}/EOS`)
+      this.http.get(`/api/v1/get_currency_balance/arisen.token/${accountId}/RSN`)
            .subscribe((res: any) => {
-                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]); 
+                          this.unstaked = (!res[0]) ? 0 : Number(res[0].split(' ')[0]);
                           if (this.mainData.voter_info && this.mainData.voter_info.staked){
                               this.staked = this.mainData.voter_info.staked / 10000;
                           }
@@ -91,8 +91,8 @@ export class WalletPageComponent implements OnInit {
   getWalletAPI(){
        this.http.get(`/api/v1/get_wallet_api`)
           .subscribe((res: any) => {
-                          this.eosNetwork.host = res.host;
-                          this.eosNetwork.port = res.port;
+                          this.rsnNetwork.host = res.host;
+                          this.rsnNetwork.port = res.port;
                           this.protocol = res.protocol;
                       },
                       (error) => {
@@ -133,13 +133,13 @@ export class WalletPageComponent implements OnInit {
       }
   }
 
-  loginScatter(){
-    if (!this.WINDOW.scatter){
-        console.error('Please install scatter wallet !');
+  loginArkId(){
+    if (!this.WINDOW.arkid){
+        console.error('Please install aRKid wallet !');
     }
-    localStorage.setItem("scatter", 'loggedIn');
-    this.WINDOW.scatter.getIdentity({
-       accounts: [this.eosNetwork]
+    localStorage.setItem("arkid", 'loggedIn');
+    this.WINDOW.arkid.getIdentity({
+       accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
         if (identity && identity.accounts[0] && identity.accounts[0].name){
@@ -150,12 +150,12 @@ export class WalletPageComponent implements OnInit {
     });
   }
 
-  logoutScatter(){
-    if (!this.WINDOW.scatter){
-        return this.notifications.error('Scatter error', 'Please install Scatter extension');
+  logoutArkId(){
+    if (!this.WINDOW.arkid){
+        return this.notifications.error('ArkId error', 'Please install ArkId extension');
     }
-    localStorage.setItem('scatter', 'loggedOut');
-    this.WINDOW.scatter.forgetIdentity().then(() => {
+    localStorage.setItem('arkid', 'loggedOut');
+    this.WINDOW.arkid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -171,8 +171,8 @@ export class WalletPageComponent implements OnInit {
         return this.notifications.error('Error', 'Please type account To and Amount');
     }
         let amount = Number(`${this.transfer.amount}`).toFixed(4) + ` ${this.transfer.symbol}`;
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, this.protocol);
-        eos.transfer(this.identity.accounts[0].name, this.transfer.to, amount, this.transfer.memo)
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        rsn.transfer(this.identity.accounts[0].name, this.transfer.to, amount, this.transfer.memo)
            .then(result => {
                 this.getAccount(this.identity.accounts[0].name);
                 this.notifications.success('Transaction Success', 'Please check your account page');
@@ -185,14 +185,14 @@ export class WalletPageComponent implements OnInit {
            }).catch(err => {
                 console.error(err);
                 this.notifications.error('Transaction Fail', '');
-           });  
+           });
   }
 
   generateContractTransaction(fields, method) {
       //console.log(fields, method, this.contractFieldsRender);
       let types = {};
       this.contractFieldsRender.forEach(elem => {
-           types[elem.name] = elem.type; 
+           types[elem.name] = elem.type;
       });
       Object.keys(fields).forEach(key => {
             if (types[key] && types[key].indexOf('uint') >= 0 || types[key].indexOf('bool') >= 0 || types[key].indexOf('int') >= 0){
@@ -220,10 +220,10 @@ export class WalletPageComponent implements OnInit {
           return console.error('Identity error!!!');
       }
         let requiredFields = {
-            accounts: [this.eosNetwork]
+            accounts: [this.rsnNetwork]
         }
-        let eos = this.WINDOW.scatter.eos(this.eosNetwork, this.WINDOW.Eos, this.eosOptions, this.protocol);
-        eos.contract(this.contractName, {
+        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        rsn.contract(this.contractName, {
             requiredFields
         }).then(contract => {
             if (!contract[method]){
@@ -237,7 +237,7 @@ export class WalletPageComponent implements OnInit {
             }).catch(err => {
                  console.error(err);
                  this.notifications.error('Transaction Fail', '');
-            });  
+            });
         }).catch(err => {
             console.error(err);
             this.notifications.error('Transaction Fail', '');
@@ -270,13 +270,13 @@ export class WalletPageComponent implements OnInit {
   ngOnInit() {
      this.getWalletAPI();
 
-     if (localStorage.getItem("scatter") === 'loggedIn'){
-           if (!this.WINDOW.scatter){
-                document.addEventListener('scatterLoaded', () => {
-                      this.loginScatter();
+     if (localStorage.getItem("arkid") === 'loggedIn'){
+           if (!this.WINDOW.arkid){
+                document.addEventListener('arkidLoaded', () => {
+                      this.loginArkId();
                 });
            } else {
-             this.loginScatter();
+             this.loginArkId();
            }
      }
   }
