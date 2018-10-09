@@ -54,12 +54,12 @@
 
     <div class="col-sm-12" *ngIf="!identity">
       <div class="analytics-header-right">
-        <button mat-raised-button color="primary" class="btn-generate" (click)="loginScatter()">login with aRK ID</button>
+        <button mat-raised-button color="primary" class="btn-generate" (click)="loginArkId()">login with aRK ID</button>
       </div>
     </div>
     <div class="col-sm-12" *ngIf="identity">
       <div class="analytics-header-right logout">
-        <button mat-raised-button color="primary"  (click)="logoutScatter()">Logout</button>
+        <button mat-raised-button color="primary"  (click)="logoutArkId()">Logout</button>
       </div>
     </div>
 

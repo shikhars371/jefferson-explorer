@@ -27,14 +27,14 @@ config.MARIA_DB = {
 
 // cron processes (aggregation of main stat - actions, transactions, accounts, analytics)
 config.CRON = false;
-config.CRON_API = 'https://greatchain.arisennodes.io';
+config.CRON_API = 'https://api.arising.io';
 
 config.TPS_ENABLE = true;
 config.MAX_TPS_TIME_UPDATE = 5000;
 
 config.rsnInfoConfigs = {
       mainNet: {
-        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        chainId: "fffa80dc4492fedaa90cbc4ee6f5520568826dfb31ed9c8c161224349f6b82f5",
         httpEndpoint: "https://greatchain.arisennodes.io",
         name: "Main Net",
         key: "mainNet"
@@ -66,18 +66,18 @@ config.rsnConfig = {
   }
 };
 
-// scatter wallet
+// ArkID wallet
 config.walletAPI = {
-        host: 'wallet.arisennodes.com',
+        host: 'https://greatchain.arisennodes.io',
         port: '',
         protocol: 'https'
 };
 
 // api url for producers list
-config.customChain = 'https://producers.arisennodes.com';
+config.customChain = 'https://greatchain.arisennodes.io';
 
 // api url for history
-config.historyChain = 'https://history.arisennodes.com';
+config.historyChain = 'https://greatchain.arisennodes.io';
 
 config.apiV = 'v1'; // api version
 config.RAM_UPDATE = 5 * 60 * 1000; // time for ram update - /api/api.*.socket

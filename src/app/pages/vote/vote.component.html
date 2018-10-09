@@ -7,7 +7,7 @@
 	<h1 class="market-header">Vote for BPs</h1>
 
 	<div class="col-sm-4 block-info-line" *ngIf="!identity">
-		  <button mat-raised-button class="btn-generate" color="primary" (click)="loginScatter()">login with Scatter</button>
+		  <button mat-raised-button class="btn-generate" color="primary" (click)="loginArkId()">login with ArkId</button>
 	</div>
 
 	<div class="block-info" *ngIf="identity">
@@ -65,7 +65,7 @@
    			</div>
 
         <div class="col-sm-12 acc-list no-padding" *ngIf="identity">
-            <button mat-raised-button class="btn-generate" color="primary" (click)="logoutScatter()">Logout</button>
+            <button mat-raised-button class="btn-generate" color="primary" (click)="logoutArkId()">Logout</button>
         </div>
 
 
