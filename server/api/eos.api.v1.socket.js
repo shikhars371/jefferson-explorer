@@ -5,7 +5,7 @@
 const config          = require('../../config.js');
 const async           = require('async');
 const customFunctions = require('./rsn.api.v1.custom');
-const RSN             = require('arisenjs');
+const RSN             = require('arisenjsv1');
 
 const log4js = require('log4js');
 log4js.configure(config.logger);

@@ -2,7 +2,7 @@ const async			= require('async');
 const mongoose      = require("mongoose");
 const config      	= require('../../config');
 
-const RSN     		= require('arisenjs');
+const RSN     		= require('arisenjsv1');
 const rsn     		= RSN(config.rsnConfig);
 
 mongoose.Promise = global.Promise;

@@ -5,7 +5,7 @@ const config      	= require('../../config');
 const fs 			= require('fs');
 const csvWriter 	= require('csv-write-stream');
 
-const RSN     		= require('arisenjs');
+const RSN     		= require('arisenjsv1');
 config.rsnConfig.httpEndpoint =  (config.CRON) ? config.CRON_API : config.rsnConfig.httpEndpoint;
 const rsn     		= RSN(config.rsnConfig);
 

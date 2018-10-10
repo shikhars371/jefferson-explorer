@@ -18,7 +18,7 @@ const mariaDB       = require('mariasql');
 const mongoose      = require("mongoose");
 mongoose.set('useCreateIndex', true);
 
-const RSN           = require('arisenjs');
+const RSN           = require('arisenjsv1');
 global.rsn          = RSN(config.rsnConfig);
 
 const log4js        = require('log4js');

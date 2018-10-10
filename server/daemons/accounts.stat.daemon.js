@@ -3,7 +3,7 @@ const async			= require('async');
 const mongoose      = require("mongoose");
 const config      	= require('../../config');
 
-const RSN     		= require('arisenjs');
+const RSN     		= require('arisenjsv1');
 config.rsnConfig.httpEndpoint =  (config.CRON) ? config.CRON_API : config.rsnConfig.httpEndpoint;
 const rsn     		= RSN(config.rsnConfig);
 
