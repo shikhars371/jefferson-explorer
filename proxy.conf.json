@@ -1,6 +1,6 @@
 {
 	"/api/*" : {
-		"target": "https://greatchain.arisennodes.io",
+		"target": "http://localhost:3039",
 		"secure": true,
 		"logLevel": "debug"
 	},

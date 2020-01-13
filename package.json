@@ -29,6 +29,7 @@
     "angular2-notifications": "~1.0.2",
     "appmetrics-dash": "^3.4.0",
     "appmetrics-prometheus": "^1.0.1",
+    "arisenid-js": "^1.0.0",
     "arisenjsv1": "~1.0.0",
     "arkid-js": "~1.0.0",
     "body-parser": "^1.18.3",

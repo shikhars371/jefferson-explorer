@@ -34,7 +34,7 @@ config.MAX_TPS_TIME_UPDATE = 5000;
 
 config.rsnInfoConfigs = {
       mainNet: {
-        chainId: "fffa80dc4492fedaa90cbc4ee6f5520568826dfb31ed9c8c161224349f6b82f5",
+        chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
         httpEndpoint: "https://greatchain.arisennodes.io",
         name: "Main Net",
         key: "mainNet"
@@ -53,7 +53,7 @@ config.endpoints = ['https://greatchain.arisennodes.io'];
 
 // rsnjs
 config.rsnConfig = {
-  chainId: "fffa80dc4492fedaa90cbc4ee6f5520568826dfb31ed9c8c161224349f6b82f5",
+  chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
   keyProvider: "",
   httpEndpoint: config.endpoints[0],
   expireInSeconds: 60,
@@ -66,7 +66,7 @@ config.rsnConfig = {
   }
 };
 
-// ArkID wallet
+// ArisenID wallet
 config.walletAPI = {
         host: 'https://greatchain.arisennodes.io',
         port: '',

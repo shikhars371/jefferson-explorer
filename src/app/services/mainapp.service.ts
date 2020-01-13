@@ -90,7 +90,7 @@ export class MainService {
 
   getGlobalNetConfig(){
     if (!this.getCookie("netsConf")){
-      this.rsnConfig.chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
+      this.rsnConfig.chainId = "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3";
       this.rsnConfig.httpEndpoint = "http://greatchain.arisennodes.io";
       return this.WINDOW.Rsn(this.rsnConfig);
     }

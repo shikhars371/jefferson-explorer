@@ -34,12 +34,12 @@ export class VotePageComponent implements OnInit {
             blockchain: 'rsn',
             host: '',
             port: '',
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
   };
   rsnOptions = {
             broadcast: true,
             sign: true,
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3"
   };
   protocol = 'https';
 
@@ -153,11 +153,11 @@ export class VotePageComponent implements OnInit {
   }
 
   loginArkId(){
-    if (!this.WINDOW.arkid){
-        console.error('Please install arkid wallet !');
+    if (!this.WINDOW.arisenid){
+        console.error('Please install ArisenId wallet !');
     }
-    localStorage.setItem("arkid", 'loggedIn');
-    this.WINDOW.arkid.getIdentity({
+    localStorage.setItem("arisenid", 'loggedIn');
+    this.WINDOW.arisenid.getIdentity({
        accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
@@ -170,11 +170,11 @@ export class VotePageComponent implements OnInit {
   }
 
   logoutArkId(){
-    if (!this.WINDOW.arkid){
-        return this.notifications.error('ArkId error', 'Please install ArkId extension');
+    if (!this.WINDOW.arisenid){
+        return this.notifications.error('ArisenId error', 'Please install ArisenId extension');
     }
-    localStorage.setItem('arkid', 'loggedOut');
-    this.WINDOW.arkid.forgetIdentity().then(() => {
+    localStorage.setItem('arisenid', 'loggedOut');
+    this.WINDOW.arisenid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -189,7 +189,7 @@ export class VotePageComponent implements OnInit {
     if (! this.vote.voter.length){
         return this.notifications.error('Error', 'Please type Voter');
     }
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
         rsn.contract('arisen', {
             accounts: [this.rsnNetwork]
         }).then(contract => {
@@ -242,8 +242,8 @@ export class VotePageComponent implements OnInit {
   ngOnInit() {
       this.getWalletAPI();
 
-     if (localStorage.getItem("arkid") === 'loggedIn'){
-           if (!this.WINDOW.arkid){
+     if (localStorage.getItem("arisenid") === 'loggedIn'){
+           if (!this.WINDOW.arisenid){
                 document.addEventListener('arkidLoaded', () => {
                       this.loginArkId();
                 });

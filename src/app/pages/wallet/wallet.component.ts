@@ -7,7 +7,6 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { MainService } from '../../services/mainapp.service';
 import { NotificationsService } from 'angular2-notifications';
 
-
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.component.html',
@@ -33,12 +32,12 @@ export class WalletPageComponent implements OnInit {
             blockchain: 'rsn',
             host: '',
             port: '',
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
   };
   rsnOptions = {
             broadcast: true,
             sign: true,
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3"
   };
   protocol = 'https';
 
@@ -134,11 +133,15 @@ export class WalletPageComponent implements OnInit {
   }
 
   loginArkId(){
-    if (!this.WINDOW.arkid){
-        console.error('Please install aRKid wallet !');
+
+
+    console.log(" hello obj ");
+
+    if (!this.WINDOW.ArisenId){
+        console.error('Please install ArisenId wallet !');
     }
-    localStorage.setItem("arkid", 'loggedIn');
-    this.WINDOW.arkid.getIdentity({
+    localStorage.setItem("arisenid", 'loggedIn');
+    this.WINDOW.arisenid.getIdentity({
        accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
@@ -151,11 +154,11 @@ export class WalletPageComponent implements OnInit {
   }
 
   logoutArkId(){
-    if (!this.WINDOW.arkid){
-        return this.notifications.error('ArkId error', 'Please install ArkId extension');
+    if (!this.WINDOW.arisenid){
+        return this.notifications.error('ArisenId error', 'Please install ArisenId extension');
     }
-    localStorage.setItem('arkid', 'loggedOut');
-    this.WINDOW.arkid.forgetIdentity().then(() => {
+    localStorage.setItem('arisenid', 'loggedOut');
+    this.WINDOW.arisenid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -171,7 +174,7 @@ export class WalletPageComponent implements OnInit {
         return this.notifications.error('Error', 'Please type account To and Amount');
     }
         let amount = Number(`${this.transfer.amount}`).toFixed(4) + ` ${this.transfer.symbol}`;
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
         rsn.transfer(this.identity.accounts[0].name, this.transfer.to, amount, this.transfer.memo)
            .then(result => {
                 this.getAccount(this.identity.accounts[0].name);
@@ -222,7 +225,7 @@ export class WalletPageComponent implements OnInit {
         let requiredFields = {
             accounts: [this.rsnNetwork]
         }
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
         rsn.contract(this.contractName, {
             requiredFields
         }).then(contract => {
@@ -270,8 +273,8 @@ export class WalletPageComponent implements OnInit {
   ngOnInit() {
      this.getWalletAPI();
 
-     if (localStorage.getItem("arkid") === 'loggedIn'){
-           if (!this.WINDOW.arkid){
+     if (localStorage.getItem("arisenid") === 'loggedIn'){
+           if (!this.WINDOW.arisenid){
                 document.addEventListener('arkidLoaded', () => {
                       this.loginArkId();
                 });

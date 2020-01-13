@@ -46,12 +46,12 @@ export class RamPageComponent implements OnInit{
             blockchain: 'rsn',
             host: '',
             port: '',
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
   };
   rsnOptions = {
             broadcast: true,
             sign: true,
-            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
+            chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3"
   };
   protocol = 'https';
   identity;
@@ -202,11 +202,11 @@ export class RamPageComponent implements OnInit{
   }
 
   loginArkId(){
-    if (!this.WINDOW.arkid){
-        return this.notifications.error('ArkId error', 'Please install ArkId extension');
+    if (!this.WINDOW.arisenid){
+        return this.notifications.error('ArisenId error', 'Please install ArisenId extension');
     }
-    localStorage.setItem("arkid", 'loggedIn');
-    this.WINDOW.arkid.getIdentity({
+    localStorage.setItem("arisenid", 'loggedIn');
+    this.WINDOW.arisenid.getIdentity({
        accounts: [this.rsnNetwork]
     }).then(identity => {
         this.identity = identity;
@@ -220,11 +220,11 @@ export class RamPageComponent implements OnInit{
   }
 
   logoutArkId(){
-    if (!this.WINDOW.arkid){
+    if (!this.WINDOW.arisenid){
         return this.notifications.error('ArkId error', 'Please install ArkId extension');
     }
-    localStorage.setItem("arkid", 'loggedOut');
-    this.WINDOW.arkid.forgetIdentity().then(() => {
+    localStorage.setItem("arisenid", 'loggedOut');
+    this.WINDOW.arisenid.forgetIdentity().then(() => {
         location.reload();
         this.notifications.success('Logout success', '');
     }).catch(err => {
@@ -243,7 +243,7 @@ export class RamPageComponent implements OnInit{
         let requiredFields = {
             accounts: [this.rsnNetwork]
         }
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
         rsn.contract('arisen', {
             requiredFields
         }).then(contract => {
@@ -283,7 +283,7 @@ export class RamPageComponent implements OnInit{
         let requiredFields = {
             accounts: [this.rsnNetwork]
         }
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, this.protocol);
         rsn.contract('arisen', {
             requiredFields
         }).then(contract => {
@@ -312,7 +312,7 @@ export class RamPageComponent implements OnInit{
         return console.error('Identity error!!!');
     }
         let amount = Number(`${this.donation}`).toFixed(4);
-        let rsn = this.WINDOW.arkid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, "https");
+        let rsn = this.WINDOW.arisenid.rsn(this.rsnNetwork, this.WINDOW.Rsn, this.rsnOptions, "https");
         rsn.transfer(this.identity.accounts[0].name, 'rsnwebnetbp1', `${amount} RSN`, 'Donation')
            .then(result => {
                 console.log(result);
@@ -365,9 +365,9 @@ export class RamPageComponent implements OnInit{
      this.getChart(this.dateFrom);
      this.getWalletAPI();
 
-     if (localStorage.getItem("arkid") === 'loggedIn'){
-           if (!this.WINDOW.arkid){
-                document.addEventListener('arkidLoaded', () => {
+     if (localStorage.getItem("arisenid") === 'loggedIn'){
+           if (!this.WINDOW.arisenid){
+                document.addEventListener('arisenidLoaded', () => {
                       this.loginArkId();
                 });
            } else {
