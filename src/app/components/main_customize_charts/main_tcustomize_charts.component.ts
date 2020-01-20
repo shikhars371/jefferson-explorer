@@ -40,10 +40,10 @@ export class MainCustomizeChartsComponent implements OnInit{
   constructor(private http: HttpClient, private socket: Socket, private MainService: MainService){}
 
   getData() {
-        this.http.get('https://nv6khovry9.execute-api.us-east-1.amazonaws.com/dev/get_arisen_price')
+        this.http.get('https://nv6khovry9.execute-api.us-east-1.amazonaws.com/dev/rsn_price_from_bts')
                   .subscribe(
                       (res: any) => {
-                           this.currencyObj = res.data.USD.price;
+                           this.currencyObj = parseFloat(res.data.USD.price).toFixed(5);
                            this.MainService.setRsnPrice(this.currencyObj);
                            setTimeout(() => { this.getData() }, this.timeForUpdate);
                       },
