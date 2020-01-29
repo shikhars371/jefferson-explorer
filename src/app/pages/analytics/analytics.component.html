@@ -62,7 +62,7 @@
     <ng-container matColumnDef="Balance">
       <mat-header-cell *matHeaderCellDef> Total Balance </mat-header-cell>
       <mat-cell *matCellDef="let element">
-             <strong>{{element?.balance_rsn.toLocaleString() }} RSN</strong>
+             <strong>{{element?.balance_rsn }} RSN</strong>
       </mat-cell>
     </ng-container>
 
@@ -70,7 +70,7 @@
     <ng-container matColumnDef="Staked">
       <mat-header-cell *matHeaderCellDef> Staked </mat-header-cell>
       <mat-cell *matCellDef="let element" class="color-light-grey">
-          <strong>{{element?.staked.toLocaleString() }} RSN</strong>
+          <strong>{{element?.staked }} RSN</strong>
       </mat-cell>
     </ng-container>
 
@@ -79,7 +79,7 @@
     <ng-container matColumnDef="Unstaked">
       <mat-header-cell *matHeaderCellDef> Unstaked </mat-header-cell>
       <mat-cell *matCellDef="let element" class="change-container">
-           <strong> {{ element?.unstaked.toLocaleString() }} RSN</strong>
+           <strong> {{ element?.unstaked }} RSN</strong>
       </mat-cell>
     </ng-container>
 
