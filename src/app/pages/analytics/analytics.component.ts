@@ -52,10 +52,8 @@ export class AnalyticsPageComponent implements OnInit{
                       (res: any) => {
                           this.mainData = res;
                           this.pieChart = this.createPieChart(this.mainData);
-
                           let ELEMENT_DATA: Element[] = this.mainData;
                           this.dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
-
                           this.spinner = false;
                       },
                       (error) => {
