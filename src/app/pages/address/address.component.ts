@@ -40,7 +40,6 @@ export class AddressPageComponent implements OnInit, OnDestroy{
         account_names: []
       };
       data.account_names.forEach(elem => {
-        console.log("shikhar",elem);
           // if (elem.permission === "active"){
              result.account_names.push(elem); 
           // }  
