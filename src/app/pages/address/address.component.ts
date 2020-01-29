@@ -26,6 +26,8 @@ export class AddressPageComponent implements OnInit, OnDestroy{
       this.spinner = true;
   		this.http.get(`/api/v1/get_key_accounts/${address}`)
   				 .subscribe((res: any) => {
+            console.log("shikhar res",res);
+
                           this.mainData = (res && typeof !res.account_names) ? this.createArrayAccounts(res): res;
                           this.spinner = false;
                       },
@@ -36,14 +38,19 @@ export class AddressPageComponent implements OnInit, OnDestroy{
   };
 
   createArrayAccounts(data){
+    console.log("shikhar data",data);
+
       let result = {
         account_names: []
       };
-      data.forEach(elem => {
-          if (elem.permission === "active"){
-             result.account_names.push(elem.account); 
-          }  
+      data.account_names.forEach(elem => {
+        console.log("shikhar",elem);
+          // if (elem.permission === "active"){
+             result.account_names.push(elem); 
+          // }  
       });
+      console.log("shikhar result",result);
+
       return result;
   }
 
