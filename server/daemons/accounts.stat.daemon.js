@@ -139,7 +139,7 @@ function transactionsAggregate (trx, stat, callback){
 	   			}
 	   			let stat_acc = new STATS_ACCOUNT({
 	   					account_name: action.data.name
-	   			});
+				   	});
 	   			stat_acc.save((err) => {
 	   				if (err){
 	   					log.error(err);
