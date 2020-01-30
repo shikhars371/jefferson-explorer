@@ -173,7 +173,7 @@ module.exports 	= function(router, config, request, log, mongoMain, MARIA) {
 	* params - offset
 	*/
 	router.get('/api/v1/get_accounts_analytics/:offset', (req, res) => {
-		 STATS_ACCOUNT.find()
+		 STATS_ACCOUNT.find({account_name: {$exists: true}})
 	   	 		.sort({ balance_rsn: -1 })
 	   	 		.limit(Number(req.params.offset))
 	   	 		.exec((err, result) => {
