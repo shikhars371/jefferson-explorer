@@ -29,7 +29,7 @@
    <ngx-charts-pie-chart
               [view]="[1200, 500]"
               scheme="cool"
-              [results]="pieChart"
+              [results]="pieChart || [{name: '0', value: 1}]"
               [gradient]="ngxChartOptions.gradient"
               [legend]="true"
               [labels]="true">
