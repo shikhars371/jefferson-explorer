@@ -13,33 +13,33 @@ let PRODUCERS_PROCESS = 0;
 
 module.exports = () => {
         
-        cron.schedule('*/10 * * * *', () => {
+        cron.schedule('* * */48 * *', () => {
             if (ACCOUNTS_PROCESS === 0){
               console.log('====== running daemon analytics account 1');
               startAccountsDaemon();
             }
         });
         
-        cron.schedule('*/1 * * * *', () => {
+        cron.schedule('* * */48 * *', () => {
             if (ACCOUNTS_STAT_PROCESS === 0){
               console.log('====== global stat daemon');
               startGlobalStatAnalytics();
             }
         });
 
-        cron.schedule('0 0 0 * * *', () => {
+        cron.schedule('*/30 * * * *', () => {
             if (GLOBAL_STAT_PROCESS === 0){
               console.log('running account analytics daemon 2');
               startAccountsAnalytics();
             }
         });
 
-        cron.schedule('0 0 0 * * *', () => {
-            if (PRODUCERS_PROCESS === 0){
-              console.log('running account analytics daemon 2');
-              startAccountsAnalytics();
-            }
-        });
+        // cron.schedule('0 0 0 * * *', () => {
+        //     if (PRODUCERS_PROCESS === 0){
+        //       console.log('running account analytics daemon 2');
+        //       startAccountsAnalytics();
+        //     }
+        // });
 
         startAccountsDaemon();
         startGlobalStatAnalytics();
