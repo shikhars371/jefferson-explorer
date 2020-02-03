@@ -13,14 +13,14 @@ let PRODUCERS_PROCESS = 0;
 
 module.exports = () => {
         
-        cron.schedule('* * */48 * *', () => {
+        cron.schedule('2 2 */2 * *', () => {
             if (ACCOUNTS_PROCESS === 0){
               console.log('====== running daemon analytics account 1');
               startAccountsDaemon();
             }
         });
         
-        cron.schedule('* * */48 * *', () => {
+        cron.schedule('2 2 */2 * *', () => {
             if (ACCOUNTS_STAT_PROCESS === 0){
               console.log('====== global stat daemon');
               startGlobalStatAnalytics();
