@@ -35,7 +35,7 @@ config.MAX_TPS_TIME_UPDATE = 5000;
 config.rsnInfoConfigs = {
       mainNet: {
         chainId: "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3",
-        httpEndpoint: "https://greatchain.arisennodes.io",
+        httpEndpoint: "https://jefferson.arisennodes.io",
         name: "Main Net",
         key: "mainNet"
       },
@@ -49,7 +49,7 @@ config.telegram = {
 };
 
 // reserve nodes
-config.endpoints = ['https://greatchain.arisennodes.io'];
+config.endpoints = ['https://jefferson.arisennodes.io'];
 
 // rsnjs
 config.rsnConfig = {
@@ -68,16 +68,16 @@ config.rsnConfig = {
 
 // ArisenID wallet
 config.walletAPI = {
-        host: 'https://greatchain.arisennodes.io',
+        host: 'https://jefferson.arisennodes.io',
         port: '',
         protocol: 'https'
 };
 
 // api url for producers list
-config.customChain = 'https://greatchain.arisennodes.io';
+config.customChain = 'https://jefferson.arisennodes.io';
 
 // api url for history
-config.historyChain = 'https://greatchain.arisennodes.io';
+config.historyChain = 'https://jefferson.arisennodes.io';
 
 config.apiV = 'v1'; // api version
 config.RAM_UPDATE = 5 * 60 * 1000; // time for ram update - /api/api.*.socket

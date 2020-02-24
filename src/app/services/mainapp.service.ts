@@ -91,7 +91,7 @@ export class MainService {
   getGlobalNetConfig(){
     if (!this.getCookie("netsConf")){
       this.rsnConfig.chainId = "136ce1b8190928711b8bb50fcae6c22fb620fd2c340d760873cf8f7ec3aba2b3";
-      this.rsnConfig.httpEndpoint = "http://greatchain.arisennodes.io";
+      this.rsnConfig.httpEndpoint = "http://jefferson.arisennodes.io";
       return this.WINDOW.Rsn(this.rsnConfig);
     }
       let cookie = JSON.parse(this.getCookie("netsConf"));
